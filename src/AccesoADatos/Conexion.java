@@ -12,6 +12,6 @@ public class Conexion {
     private static Connection conn;
 
     
-    public class Test  {
+   
             
 }
