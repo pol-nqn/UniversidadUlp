@@ -1,0 +1,55 @@
+Para incluir las librerías de un proyecto de NetBeans en un repositorio de GitHub, debes seguir estos pasos:
+
+1. **Crea un Repositorio en GitHub:**
+
+   a. Inicia sesión en tu cuenta de GitHub.
+
+   b. Haz clic en el botón "New" (Nuevo) para crear un nuevo repositorio.
+
+   c. Completa la información del repositorio, incluyendo el nombre, descripción y configuración adicional según tus necesidades. Asegúrate de seleccionar la opción "Initialize this repository with a README" (Inicializar este repositorio con un README) si deseas crear un README inicial. Luego, haz clic en "Create repository" (Crear repositorio).
+
+2. **Clona el Repositorio de GitHub en tu Computadora:**
+
+   Para hacer esto, abre una terminal o línea de comandos y utiliza el comando `git clone` para clonar tu repositorio de GitHub en tu computadora. Por ejemplo:
+
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repositorio.git
+   ```
+
+   Asegúrate de reemplazar `tu-usuario` y `tu-repositorio` con tus propias credenciales y nombre de repositorio.
+
+3. **Copia las Librerías al Proyecto Local:**
+
+   Copia las librerías que deseas incluir en tu proyecto local. Puedes copiar los archivos JAR directamente en el directorio de tu proyecto o en una carpeta específica dentro del proyecto.
+
+4. **Agrega las Librerías al Control de Versiones:**
+
+   En la terminal o línea de comandos, navega al directorio de tu proyecto clonado. Utiliza el comando `git add` para agregar las librerías al control de versiones. Por ejemplo:
+
+   ```bash
+   git add lib/  # Si las librerías están en una carpeta llamada "lib"
+   ```
+
+5. **Realiza un Commit de los Cambios:**
+
+   Utiliza el comando `git commit` para confirmar los cambios que has agregado al control de versiones. Añade un mensaje descriptivo para el commit:
+
+   ```bash
+   git commit -m "Agregadas las librerías al proyecto"
+   ```
+
+6. **Sube los Cambios al Repositorio de GitHub:**
+
+   Utiliza el comando `git push` para cargar los cambios en tu repositorio de GitHub:
+
+   ```bash
+   git push origin master
+   ```
+
+   Esto enviará los cambios, incluyendo las librerías, al repositorio en línea en GitHub.
+
+7. **Confirma en GitHub:**
+
+   Ve a la página de tu repositorio en GitHub y verifica que las librerías y otros cambios se hayan reflejado correctamente.
+
+Ahora, las librerías estarán disponibles en tu repositorio de GitHub y podrás colaborar con otros en tu proyecto utilizando esas librerías. Ten en cuenta que es importante incluir las dependencias de manera adecuada en un proyecto Java, por lo que también debes asegurarte de que tu archivo de configuración de construcción (como `pom.xml` si estás utilizando Maven o `build.gradle` si estás utilizando Gradle) esté configurado para gestionar estas librerías de forma coherente en diferentes entornos.
