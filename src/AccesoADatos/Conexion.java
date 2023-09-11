@@ -2,6 +2,9 @@ package AccesoADatos;
 
 import org.mariadb.jdbc.Connection;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Conexion {
 
@@ -11,7 +14,22 @@ public class Conexion {
     private static final String PASSWORD = "";
     private static Connection conn;
 
+    private Conexion( ) {}
     
-   
+    public static Connection conectar(){
+        if(conn == null){
+            try {
+                Class.forName("org.mariadb.jdbc.Driver");
+                conn = (Connection) DriverManager.getConnection(URL+DB + "?useLegacyDatetimeCode=false&serverTimezone=UTC" +
+                "&user=" + USUARIO + "&password=" + PASSWORD);
+
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null,"Error al cargar los drivers "+ ex.getMessage());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"Error al conectarse a la base de datos " + ex.getMessage());
+            }
+        }
+        return conn;
+    }
             
 }
