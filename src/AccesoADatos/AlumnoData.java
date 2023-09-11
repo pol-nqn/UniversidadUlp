@@ -27,10 +27,12 @@ public class AlumnoData {
         ps.setString(2, alumno.getApellido());
         ps.setString(3, alumno.getNombre());
         ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));//localDate a Date
-        ps.setBoolean(5, alumno.isEstado()); // if reducido
+        ps.setBoolean(5, alumno.isEstado()); // if reducido en lugar de getter
+        
         ps.executeUpdate();
         
         ResultSet rs = ps.getGeneratedKeys();
+        
         if (rs.next()) {
         alumno.setIdAlumno(rs.getInt("idAlumno"));
         JOptionPane.showMessageDialog(null, "Alumno añadido con exito."); 
