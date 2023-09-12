@@ -154,4 +154,33 @@ public class InscripcionData {
             JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta sql.");
         }
     }
+    
+    public List<Alumno> obternerAlumnoPorMateria(int idMat){
+        List<Alumno> alumnos = new ArrayList<>();
+        String sql = "SELECT alumno.* FROM alumno "
+                + "JOIN inscripcion ON (alumno.idAlumno = inscripcion.idAlumno) WHERE idMateria = ? ";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMat);
+            ResultSet rs = ps.executeQuery();
+            
+            Alumno alum;
+            while (rs.next()){
+                alum = new Alumno();
+                alum.setIdAlumno(rs.getInt("idAlumno"));
+                alum.setDni(rs.getInt("dni"));
+                alum.setApellido(rs.getString("apellido"));
+                alum.setNombre(rs.getString("nombre"));
+                alum.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alum.setEstado(rs.getBoolean("estado"));
+                alumnos.add(alum);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return alumnos;
+    }
 }
