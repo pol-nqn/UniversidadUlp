@@ -13,17 +13,17 @@ public class Inscripcion {
     public Inscripcion() {
     }
 
-    public Inscripcion(int idInscripcion, Alumno alumno, Materia materia, double estado) {
+    public Inscripcion(int idInscripcion, Alumno alumno, Materia materia, double nota) {
         this.idInscripcion = idInscripcion;
         this.alumno = alumno;
         this.materia = materia;
-        this.nota = estado;
+        this.nota = nota;
     }
 
-    public Inscripcion(Alumno alumno, Materia materia, double estado) {
+    public Inscripcion(Alumno alumno, Materia materia, double nota) {
         this.alumno = alumno;
         this.materia = materia;
-        this.nota = estado;
+        this.nota = nota;
     }
 
     public int getIdInscripcion() {
@@ -50,12 +50,12 @@ public class Inscripcion {
         this.materia = materia;
     }
 
-    public double isEstado() {
+    public double isNota() {
         return nota;
     }
 
-    public void setEstado(double estado) {
-        this.nota = estado;
+    public void setNota(double nota) {
+        this.nota = nota;
     }
 
    
