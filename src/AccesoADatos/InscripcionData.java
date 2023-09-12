@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author nstut
@@ -44,10 +45,50 @@ public class InscripcionData {
             }
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(InscripcionData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No exite el alumno "+ ex.getMessage());
         }
         
         return materias;
     }
+    /*Agregar metodos propios*/
+    public List<Inscripcion> obtenerInscripcionPorAlumno(int id){
+       List<Inscripcion> inscripciones = new ArrayList<Inscripcion>(); 
+       
+       String sql = "SELECT idInscripcion,idMateria FROM inscripcion "
+               + "WHERE inscripcion.idAlumno = ? "; 
+       
+       return inscripciones;
+    }
     
+    public List<Materia> obtenerMateriasNoCursadas(int id){
+        List<Materia> materias = new ArrayList<Materia>();
+        
+        try {
+            String sql = "SELECT inscripcion.idMateria, nombre, año FROM inscripcion, materia"
+                + "WHERE NOT inscripcion.idMateria = materia.idMateria AND inscripcion.idAlumno = ? ";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            Materia materia;
+            
+            while (rs.next()){
+                materia= new Materia();
+                materia.setAnioMateria(rs.getInt("anio"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setEstado(rs.getBoolean("estado"));
+                materias.add(materia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No existe el alumno " + ex.getMessage());
+        }
+        return materias;
+    }
+    
+    public void guardarInscripcion(Inscripcion inscripcion){
+        
+    }
 }
