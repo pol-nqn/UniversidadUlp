@@ -88,7 +88,70 @@ public class InscripcionData {
         return materias;
     }
     
-    public void guardarInscripcion(Inscripcion inscripcion){
+    public void guardarInscripcion(Inscripcion ins){
         
+        /*Controlar ingreso de usuarios*/
+        try {
+            String sql = "INSERT INTO inscripcion(`nota`, `idAlumno`, `idMateria`)"
+                + " VALUES ( ? , ? , ? )";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, ins.isNota());
+            ps.setInt(2,ins.getAlumno().getIdAlumno());
+            ps.setInt(3,ins.getMateria().getIdMateria());
+            
+            int insert = ps.executeUpdate();
+            
+            if (insert == 1){
+                JOptionPane.showMessageDialog(null, "Inscripcion realizada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Falló la inscripcion.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error a ejecutar la consulta sql");
+        }
+        
+    }
+    public void borrarInscripcion(Inscripcion ins){
+        
+        /*Controlar ingreso de usuarios*/
+        try {
+            String sql = "DELETE FROM inscripcion WHERE idInscripcion = ?";
+                
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, ins.getIdInscripcion());
+            
+            int insert = ps.executeUpdate();
+            
+            if (insert == 1){
+                JOptionPane.showMessageDialog(null, "Inscripcion eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraba inscripto a la materia.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error a ejecutar la consulta sql");
+        }
+    }
+    
+    public void actualizarNota(int idAlum, int idMat, double nota){
+        String sql = "UPDATE inscripcion SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, nota);
+            ps.setInt(2, idAlum);
+            ps.setInt(3, idMat);
+            
+            int update = ps.executeUpdate();
+            if (update == 1){
+                JOptionPane.showMessageDialog(null, "Se actualizó la nota correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puso actualizar la nota.");
+            }
+                
+            ps.close();    
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta sql.");
+        }
     }
 }
