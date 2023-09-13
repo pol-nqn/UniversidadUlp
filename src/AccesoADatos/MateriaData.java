@@ -58,4 +58,20 @@ public class MateriaData {
         }
         return materia;
     }
+    
+    public void modificarMateria (Materia materia){
+        String sql = "UPDATE materia "
+                + "SET nombre = ?,anio = ?,estado = ? WHERE idMateria = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, materia.getNombre());
+            ps.setInt(2, materia.getAnioMateria());
+            ps.setBoolean(3, materia.isEstado());
+            ps.setInt(4, materia.getIdMateria());
+            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No existe la materia");
+        }
+    }
 }
