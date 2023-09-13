@@ -69,9 +69,39 @@ public class MateriaData {
             ps.setBoolean(3, materia.isEstado());
             ps.setInt(4, materia.getIdMateria());
             
-            ps.executeUpdate();
+            int modif = ps.executeUpdate();
+            if (modif == 1){
+                JOptionPane.showMessageDialog(null, "Se eliminó la materia exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe la materia");
+            }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No existe la materia");
         }
+        
+    }
+    
+    public void eliminarMateria (int id){
+        String sql = "UPDATE materia SET estado = ? WHERE idMateria = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+            
+            int eliminar = ps.executeUpdate();
+            if (eliminar == 1){
+                JOptionPane.showMessageDialog(null, "Se eliminó la materia exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe la materia");
+                //agregar mensaje en case de que la materia ya este eliminada
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No existe la materia");
+        }
+        
+        
     }
 }
