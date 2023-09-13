@@ -39,4 +39,23 @@ public class MateriaData {
         
     }
     
+    public Materia buscarMateria(int id){
+        String sql = "SELECT * FROM materia WHERE idMateria = ?";
+        Materia materia = new Materia();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            materia.setAnioMateria(rs.getInt("anio"));
+            materia.setIdMateria(id);
+            materia.setNombre(rs.getString("nombre"));
+            materia.setEstado(rs.getBoolean("estado"));
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No existe la materia");
+        }
+        return materia;
+    }
 }
