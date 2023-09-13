@@ -64,7 +64,7 @@ public class InscripcionData {
         List<Materia> materias = new ArrayList<Materia>();
         
         try {
-            String sql = "SELECT inscripcion.idMateria, nombre, año FROM inscripcion, materia"
+            String sql = "SELECT inscripcion.idMateria, nombre, anio FROM inscripcion, materia"
                 + "WHERE NOT inscripcion.idMateria = materia.idMateria AND inscripcion.idAlumno = ? ";
             
             PreparedStatement ps = con.prepareStatement(sql);
