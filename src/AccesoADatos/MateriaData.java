@@ -6,6 +6,8 @@ package AccesoADatos;
 
 import Entidades.Materia;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -101,7 +103,27 @@ public class MateriaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No existe la materia");
         }
+    }
         
-        
+    public List<Materia> listarMaterias (){
+        List<Materia> materias = new ArrayList<> ();
+        String sql = "SELECT * FROM materia";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Materia materia;
+            while (rs.next()){
+                materia = new Materia();
+                materia.setAnioMateria(rs.getInt("anio"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setEstado(rs.getBoolean("estado"));
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materias.add(materia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta");
+        }
+        return materias; 
     }
 }
