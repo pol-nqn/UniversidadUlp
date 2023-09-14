@@ -123,19 +123,17 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                                         .addComponent(jrInsc)))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(fechNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jButton4)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jButton1)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jButton2)))
+                                .addComponent(jButton4)
+                                .addGap(37, 37, 37)
+                                .addComponent(jButton1)
+                                .addGap(37, 37, 37)
+                                .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addComponent(jButton3))))
+                                .addComponent(jButton3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(53, 53, 53)
+                                .addComponent(fechNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +191,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDniActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtfDniActionPerformed
 
     private void jtfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdActionPerformed
@@ -208,6 +206,11 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         AlumnoData alumn = new AlumnoData();
         Alumno alum = new Alumno();
         alum = alumn.buscarAlumno(Integer.parseInt(jtfId.getText()));
+        jtfDni.setText(Integer.toString(alum.getDni()));
+        jtfApellido.setText(alum.getApellido());
+        jtfNombre.setText(alum.getNombre());
+//        fechNac.setDate(LocalDate.alum.getFechaNacimiento());
+        jrInsc.setSelected(alum.isEstado());
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
