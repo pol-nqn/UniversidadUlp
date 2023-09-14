@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/Entidades/Inscripcion.java</file>
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/AccesoADatos/InscripcionData.java</file>
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/AccesoADatos/MateriaData.java</file>
@@ -12,6 +13,15 @@
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/AccesoADatos/AlumnoData.java</file>
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/Vistas/MenuPrincipal.java</file>
             <file>file:/C:/Users/nstut/OneDrive/Documentos/GitHub/UniversidadUlp/src/AccesoADatos/ClasePrueba.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/AccesoADatos/MateriaData.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/Vistas/MenuPrincipal.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/AccesoADatos/AlumnoData.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/AccesoADatos/InscripcionData.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/Entidades/Alumno.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/Entidades/Inscripcion.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/Vistas/FormularioAlumnos.java</file>
+            <file>file:/C:/Users/mariela/Desktop/UniversidadUlp/src/AccesoADatos/Conexion.java</file>
+
         </group>
     </open-files>
 </project-private>
