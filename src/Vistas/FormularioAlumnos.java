@@ -6,6 +6,8 @@ package Vistas;
 
 import AccesoADatos.*;
 import Entidades.Alumno;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -47,7 +49,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
         fechNac = new com.toedter.calendar.JDateChooser();
 
         jLabel1.setText("Alumno");
@@ -89,10 +91,10 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
         jButton3.setText("Salir");
 
-        jButton4.setText("Nuevo");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jbNuevoActionPerformed(evt);
             }
         });
 
@@ -123,7 +125,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                                         .addComponent(jrInsc)))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
+                                .addComponent(jbNuevo)
                                 .addGap(37, 37, 37)
                                 .addComponent(jButton1)
                                 .addGap(37, 37, 37)
@@ -182,7 +184,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                     .addComponent(jButton1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton3)
-                        .addComponent(jButton4)
+                        .addComponent(jbNuevo)
                         .addComponent(jButton2)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -198,9 +200,16 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfIdActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        AlumnoData alumData = new AlumnoData();
+        Alumno alum = new Alumno ();
+        alum.setDni(Integer.parseInt(jtfDni.getText()));
+        alum.setApellido(jtfApellido.getText());
+        alum.setNombre(jtfNombre.getText());
+        alum.setFechaNacimiento(LocalDate.parse(fechNac.getDate().toString()));
+        alum.setEstado(jrInsc.getVerifyInputWhenFocusTarget());
+        alumData.guardarAlumno(alum);
+    }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         AlumnoData alumn = new AlumnoData();
@@ -219,7 +228,6 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -228,6 +236,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JRadioButton jrInsc;
     private javax.swing.JTextField jtfApellido;
     private javax.swing.JTextField jtfDni;
