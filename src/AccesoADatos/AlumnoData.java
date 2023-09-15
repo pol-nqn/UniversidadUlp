@@ -43,9 +43,10 @@ public class AlumnoData {
                 JOptionPane.showMessageDialog(null, "Alumno añadido con exito.");
             }
             ps.close();
+            rs.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno: " + ex.getMessage());
         }
     }
 
