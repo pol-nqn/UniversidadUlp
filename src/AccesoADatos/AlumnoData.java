@@ -26,6 +26,9 @@ public class AlumnoData {
 
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
         try {
+            //El parametro Statement.RETURN_GENERATED_KEYS devuelve un int = a 1 si al ejecutar la 
+            //PreparedStatement en que se incluye genera una clave primaria en la base de datos
+            
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, alumno.getDni());
@@ -35,11 +38,16 @@ public class AlumnoData {
             ps.setBoolean(5, alumno.isEstado()); // if reducido en lugar de getter
 
             ps.executeUpdate();
-
+            //El metodo getGeneratedKeys() nos devuelve un int con el valor de la clave primaria 
+            // generada por el PreparedStatement luego de ser ejecutado y si la constante 
+            // Statement.RETURN_GENERATED_KEYS dio = 1.
             ResultSet rs = ps.getGeneratedKeys();
-
+            
             if (rs.next()) {
-                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                //next() mueve el puntero a la siguiente fila del result set. Si no se lo llama
+                // el puntero esta antes de la primera fila, por eso debemos llamarlo una primera vez para
+                // que apunte a la primera fila, es decir nos de el primer valor del result set
+                alumno.setIdAlumno(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Alumno añadido con exito.");
             }
             ps.close();
@@ -47,7 +55,7 @@ public class AlumnoData {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno: " + ex.getMessage());
-        }
+        } 
     }
 
     public Alumno buscarAlumno(int id) {

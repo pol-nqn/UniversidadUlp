@@ -6,7 +6,10 @@ package Vistas;
 
 import AccesoADatos.*;
 import Entidades.Alumno;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -209,16 +212,24 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         AlumnoData alumData = new AlumnoData();
         Alumno alum = new Alumno ();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        
         try {
             alum.setDni(Integer.parseInt(jtfDni.getText()));
             alum.setApellido(jtfApellido.getText());
             alum.setNombre(jtfNombre.getText());
-           // LocalDate.parse(fechNac.getDate().toString(), formatter)
-            alum.setFechaNacimiento(LocalDate.now());
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
+            SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
+            //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
+            String fecha = dateAString.format(fechNac.getDate());
+            
+            alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
             alum.setEstado(true);
 
             alumData.guardarAlumno(alum);
+            
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Error al parsear");
         }
@@ -227,12 +238,23 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         AlumnoData alumn = new AlumnoData();
         Alumno alum = new Alumno();
-        alum = alumn.buscarAlumno(Integer.parseInt(jtfId.getText()));
+        
+        try{
+        alum = alumn.buscarAlumno(Integer.parseInt(jtfId.getText()));   
+        
         jtfDni.setText(Integer.toString(alum.getDni()));
         jtfApellido.setText(alum.getApellido());
         jtfNombre.setText(alum.getNombre());
-//        fechNac.setDate(LocalDate.alum.getFechaNacimiento());
+        
+        LocalDate fecha = alum.getFechaNacimiento();
+        fechNac.setDate(Date.from(fecha. //Transforma el valor Instant a Date.
+                        atStartOfDay(ZoneId.systemDefault()) //Transforma LocalDate a LocalDateTime y el parametro ZoneId le indica que usa el parametro por defecto del sistema de zona horaria
+                        .toInstant())); //Transforma el valor de fecha que ahora es LocalDateTime a Instant
+        
         jrInsc.setSelected(alum.isEstado());
+        } catch (NullPointerException ex){
+        }
+        
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
