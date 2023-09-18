@@ -61,6 +61,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
         jLabel2.setText("ID:");
 
+        jtfId.setEditable(false);
         jtfId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfIdActionPerformed(evt);
@@ -132,7 +133,10 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                                 .addGap(97, 97, 97)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(jbBuscar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -147,12 +151,8 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel7)
                                 .addGap(49, 49, 49)
                                 .addComponent(jrInsc)))
-                        .addGap(151, 228, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(75, 75, 75))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbBuscar)
-                .addGap(226, 226, 226))
             .addGroup(layout.createSequentialGroup()
                 .addGap(243, 243, 243)
                 .addComponent(jLabel1)
@@ -165,14 +165,13 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbBuscar)))
+                    .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscar))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,7 +194,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                         .addComponent(jButton3)
                         .addComponent(jbNuevo)
                         .addComponent(jButton2)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,7 +212,6 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         AlumnoData alumData = new AlumnoData();
         Alumno alum = new Alumno ();
         
-        
         try {
             alum.setDni(Integer.parseInt(jtfDni.getText()));
             alum.setApellido(jtfApellido.getText());
@@ -228,7 +226,18 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
             alum.setEstado(true);
 
-            alumData.guardarAlumno(alum);
+            int exito = alumData.guardarAlumno(alum);
+                
+            if (exito == 1){
+                jtfId.setText("");
+                jtfDni.setText("");
+                jtfApellido.setText("");
+                jtfNombre.setText("");
+                fechNac.setDate(null);
+                jrInsc.setSelected(false);
+            }
+            
+           
             
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Error al parsear");
@@ -240,8 +249,8 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno();
         
         try{
-        alum = alumn.buscarAlumno(Integer.parseInt(jtfId.getText()));   
-        
+        alum = alumn.buscarAlumno(Integer.parseInt(jtfDni.getText()));   
+        jtfId.setText(Integer.toString(alum.getIdAlumno()));
         jtfDni.setText(Integer.toString(alum.getDni()));
         jtfApellido.setText(alum.getApellido());
         jtfNombre.setText(alum.getNombre());
