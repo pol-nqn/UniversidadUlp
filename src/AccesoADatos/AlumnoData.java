@@ -22,8 +22,7 @@ public class AlumnoData {
         this.con = Conexion.conectar();
     }
 
-    public int guardarAlumno(Alumno alumno) {
-        int exito = 0;
+    public void guardarAlumno(Alumno alumno) {
         String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
         try {
             //El parametro Statement.RETURN_GENERATED_KEYS devuelve un int = a 1 si al ejecutar la 
@@ -37,7 +36,7 @@ public class AlumnoData {
             ps.setDate(4, Date.valueOf(alumno.getFechaNacimiento()));//localDate a Date
             ps.setBoolean(5, alumno.isEstado()); // if reducido en lugar de getter
 
-            exito = ps.executeUpdate();
+            ps.executeUpdate();
             //El metodo getGeneratedKeys() nos devuelve un int con el valor de la clave primaria 
             // generada por el PreparedStatement luego de ser ejecutado y si la constante 
             // Statement.RETURN_GENERATED_KEYS dio = 1.
@@ -56,22 +55,20 @@ public class AlumnoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno: " + ex.getMessage());
         } 
-        return exito;
     }
 
-    public Alumno buscarAlumno(int dni) {
+    public Alumno buscarAlumno(int id) {
         Alumno alumno = null;
-        String sql = "SELECT idAlumno, apellido, nombre, fechaNacimiento FROM alumno WHERE dni = ? AND estado = 1";
+        String sql = "SELECT dni, apellido, nombre, fechaNacimiento FROM alumno WHERE idAlumno = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, dni);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 alumno = new Alumno();
-                alumno.setIdAlumno(rs.getInt("idAlumno"));
-                alumno.setDni(dni);
+                alumno.setDni(rs.getInt("dni"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
@@ -167,11 +164,11 @@ public class AlumnoData {
         }
     }
 
-    public void eliminarAlumno(int id) {
+    public void eliminarAlumno(int dni) {
         try {
-            String sql = "UPDATE alumno SET estado = 0 WHERE idAlumno = ? ";
+            String sql = "UPDATE alumno SET estado = 0 WHERE dni = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, dni);
             int fila = ps.executeUpdate();
 
             if (fila == 1) {

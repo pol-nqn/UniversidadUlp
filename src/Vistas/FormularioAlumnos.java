@@ -94,6 +94,11 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Guardar");
 
@@ -226,16 +231,14 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
             alum.setEstado(true);
 
-            int exito = alumData.guardarAlumno(alum);
-                
-            if (exito == 1){
-                jtfId.setText("");
-                jtfDni.setText("");
-                jtfApellido.setText("");
-                jtfNombre.setText("");
-                fechNac.setDate(null);
-                jrInsc.setSelected(false);
-            }
+            alumData.guardarAlumno(alum);
+
+            jtfId.setText("");
+            jtfDni.setText("");
+            jtfApellido.setText("");
+            jtfNombre.setText("");
+            fechNac.setDate(null);
+            jrInsc.setSelected(false);
             
            
             
@@ -249,7 +252,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno();
         
         try{
-        alum = alumn.buscarAlumno(Integer.parseInt(jtfDni.getText()));   
+        alum = alumn.buscarAlumnoPorDni(Integer.parseInt(jtfDni.getText()));   
         jtfId.setText(Integer.toString(alum.getIdAlumno()));
         jtfDni.setText(Integer.toString(alum.getDni()));
         jtfApellido.setText(alum.getApellido());
@@ -265,6 +268,20 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AlumnoData alumData = new AlumnoData();
+        alumData.eliminarAlumno(Integer.parseInt(jtfDni.getText()));
+        
+        jtfId.setText("");
+        jtfDni.setText("");
+        jtfApellido.setText("");
+        jtfNombre.setText("");
+        fechNac.setDate(null);
+        jrInsc.setSelected(false);
+        
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
