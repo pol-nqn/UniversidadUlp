@@ -26,7 +26,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenu5 = new javax.swing.JMenu();
         Escritorio = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jmFormularioMaterias = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jmiFormAlumno = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -63,18 +63,33 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jmiFormAlumno);
 
-        jMenuBar1.add(jMenu1);
+        jmFormularioMaterias.add(jMenu1);
 
         jMenu2.setText("Materia");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
         jmiFormMateria.setText("Formulario de materia");
+        jmiFormMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFormMateriaActionPerformed(evt);
+            }
+        });
         jMenu2.add(jmiFormMateria);
 
-        jMenuBar1.add(jMenu2);
+        jmFormularioMaterias.add(jMenu2);
 
         jMenu3.setText("Administración");
 
         jmiManejoInsc.setText("Manejo de inscripciones");
+        jmiManejoInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiManejoInscActionPerformed(evt);
+            }
+        });
         jMenu3.add(jmiManejoInsc);
 
         jmiManejoNotas.setText("Manipulacion de notas");
@@ -85,14 +100,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jmiManejoNotas);
 
-        jMenuBar1.add(jMenu3);
+        jmFormularioMaterias.add(jMenu3);
 
         jMenu4.setText("Consultas");
 
         jmiAlumPorMat.setText("Alumnos por materias");
         jMenu4.add(jmiAlumPorMat);
 
-        jMenuBar1.add(jMenu4);
+        jmFormularioMaterias.add(jMenu4);
 
         jmSalir.setText("Salir");
         jmSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -105,9 +120,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 jmSalirActionPerformed(evt);
             }
         });
-        jMenuBar1.add(jmSalir);
+        jmFormularioMaterias.add(jmSalir);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jmFormularioMaterias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,6 +163,29 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jmSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSalirMouseClicked
     System.exit(0);
     }//GEN-LAST:event_jmSalirMouseClicked
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jmiFormMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormMateriaActionPerformed
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        FormularioMaterias formMat =new FormularioMaterias();
+        formMat.setVisible(true);
+        Escritorio.add(formMat);
+        Escritorio.moveToFront(formMat);
+    }//GEN-LAST:event_jmiFormMateriaActionPerformed
+
+    private void jmiManejoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiManejoInscActionPerformed
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        FormularioInscripciones formInsc =new FormularioInscripciones();
+        formInsc.setVisible(true);
+        Escritorio.add(formInsc);
+        Escritorio.moveToFront(formInsc);
+        
+    }//GEN-LAST:event_jmiManejoInscActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,7 +229,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jmFormularioMaterias;
     private javax.swing.JMenu jmSalir;
     private javax.swing.JMenuItem jmiAlumPorMat;
     private javax.swing.JMenuItem jmiFormAlumno;
