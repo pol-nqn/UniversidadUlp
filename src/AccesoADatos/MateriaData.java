@@ -86,7 +86,9 @@ public class MateriaData {
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No existe la materia");
-        }
+        } /*catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Debe completar todos los campos");
+        }*/
 
     }
 
