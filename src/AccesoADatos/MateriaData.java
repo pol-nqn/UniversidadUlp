@@ -51,12 +51,14 @@ public class MateriaData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-
+            
             if (rs.next()) {
                 materia.setAnioMateria(rs.getInt("anio"));
-                materia.setIdMateria(id);
+                materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setEstado(rs.getBoolean("estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe la materia");
             }
 
             ps.close();
