@@ -103,7 +103,7 @@ public class MateriaData {
 //            while (rs.next()) {
 //                boolean estado = rs.getBoolean("estado");
 //                if (estado = true) {
-                    String sql = "UPDATE materia SET estado = ? WHERE idMateria = ? AND estado = true";
+                    String sql = "UPDATE materia SET estado = ? WHERE idMateria = ?";
 
                     try {
                         PreparedStatement ps = con.prepareStatement(sql);

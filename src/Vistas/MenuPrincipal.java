@@ -25,6 +25,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         Escritorio = new javax.swing.JDesktopPane();
         jmFormularioMaterias = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -36,9 +39,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmiManejoNotas = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jmiAlumPorMat = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
         jmSalir = new javax.swing.JMenu();
 
         jMenu5.setText("jMenu5");
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +62,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 354, Short.MAX_VALUE)
         );
+
+        jmFormularioMaterias.setAlignmentX(5.0F);
 
         jMenu1.setText("Alumno");
 
@@ -109,7 +121,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jmFormularioMaterias.add(jMenu4);
 
+        jMenu6.setEnabled(false);
+        jMenu6.setPreferredSize(new java.awt.Dimension(275, 21));
+        jmFormularioMaterias.add(jMenu6);
+
         jmSalir.setText("Salir");
+        jmSalir.setAlignmentX(2.0F);
+        jmSalir.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jmSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmSalirMouseClicked(evt);
@@ -229,6 +247,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuBar jmFormularioMaterias;
     private javax.swing.JMenu jmSalir;
     private javax.swing.JMenuItem jmiAlumPorMat;

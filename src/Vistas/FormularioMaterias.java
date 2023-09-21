@@ -37,7 +37,6 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jrEstado = new javax.swing.JRadioButton();
         jbBuscar = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
-        jbEliminar = new javax.swing.JButton();
         jbModif = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
 
@@ -53,25 +52,44 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Estado:");
 
+        jtfCod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfCodMouseClicked(evt);
+            }
+        });
         jtfCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfCodActionPerformed(evt);
             }
         });
 
+        jtfNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfNombreMouseClicked(evt);
+            }
+        });
         jtfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfNombreActionPerformed(evt);
             }
         });
 
+        jtfAnio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfAnioMouseClicked(evt);
+            }
+        });
         jtfAnio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfAnioActionPerformed(evt);
             }
         });
 
-        jrEstado.setEnabled(false);
+        jrEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrEstadoActionPerformed(evt);
+            }
+        });
 
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -84,13 +102,6 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNuevoActionPerformed(evt);
-            }
-        });
-
-        jbEliminar.setText("Eliminar");
-        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEliminarActionPerformed(evt);
             }
         });
 
@@ -138,12 +149,10 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jbNuevo)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbEliminar)
-                                .addGap(18, 18, 18)
                                 .addComponent(jbModif)
-                                .addGap(18, 18, 18)
+                                .addGap(112, 112, 112)
                                 .addComponent(jBSalir)))
-                        .addGap(0, 148, Short.MAX_VALUE))))
+                        .addGap(0, 96, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(227, 227, 227)
                 .addComponent(jLabel1)
@@ -173,9 +182,8 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
-                    .addComponent(jbEliminar)
-                    .addComponent(jbModif)
-                    .addComponent(jBSalir))
+                    .addComponent(jBSalir)
+                    .addComponent(jbModif))
                 .addGap(0, 32, Short.MAX_VALUE))
         );
 
@@ -194,14 +202,15 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         MateriaData matData = new MateriaData();
         
         Materia materia = matData.buscarMateria(Integer.parseInt(jtfCod.getText()));
-        if (materia.isEstado()==true){
+//        if (materia.isEstado()==true){
         
         jtfNombre.setText(materia.getNombre());
         jtfAnio.setText(Integer.toString(materia.getAnioMateria()));
         jrEstado.setSelected(materia.isEstado());
-        }else {
-        JOptionPane.showMessageDialog(null, "No existe la materia");
-        }
+        jrEstado.setEnabled(true);
+//        }else {
+//        JOptionPane.showMessageDialog(null, "No existe la materia");
+//        }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -230,18 +239,12 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         mat.setEstado(jrEstado.isSelected());
         mat.setIdMateria(Integer.parseInt(jtfCod.getText()));
         matData.modificarMateria(mat);
-    }//GEN-LAST:event_jbModifActionPerformed
-
-    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        MateriaData matData = new MateriaData();
-        int codigo=Integer.parseInt(jtfCod.getText());
-        matData.eliminarMateria(codigo);
         
         jtfCod.setText("");
         jtfNombre.setText("");
         jtfAnio.setText("");
         jrEstado.setSelected(false);
-    }//GEN-LAST:event_jbEliminarActionPerformed
+    }//GEN-LAST:event_jbModifActionPerformed
 
     private void jtfCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodActionPerformed
         // TODO add your handling code here:
@@ -250,6 +253,35 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void jtfCodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfCodMouseClicked
+        jbNuevo.setEnabled(false);
+        jbModif.setEnabled(false);
+        jtfCod.setEnabled(true);
+        jrEstado.setEnabled(false);
+        
+    }//GEN-LAST:event_jtfCodMouseClicked
+
+    private void jtfNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNombreMouseClicked
+        jbNuevo.setEnabled(true);  
+        jbModif.setEnabled(true);
+        jtfCod.setEnabled(false);
+        jrEstado.setEnabled(true);
+    }//GEN-LAST:event_jtfNombreMouseClicked
+
+    private void jtfAnioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfAnioMouseClicked
+        jbNuevo.setEnabled(true);   
+        jbModif.setEnabled(true);
+        jtfCod.setEnabled(false);
+        jrEstado.setEnabled(true);
+    }//GEN-LAST:event_jtfAnioMouseClicked
+
+    private void jrEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrEstadoActionPerformed
+        jbNuevo.setEnabled(false);   
+        jbModif.setEnabled(true);
+        jtfCod.setEnabled(false);
+        jrEstado.setEnabled(true);
+    }//GEN-LAST:event_jrEstadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -260,7 +292,6 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jbBuscar;
-    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbModif;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JRadioButton jrEstado;
