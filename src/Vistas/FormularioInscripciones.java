@@ -8,19 +8,23 @@ import AccesoADatos.AlumnoData;
 import Entidades.Alumno;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author nstut
  */
 public class FormularioInscripciones extends javax.swing.JInternalFrame {
-
+private DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form FormularionInscripciones
      */
     public FormularioInscripciones() {
         initComponents();
         agregarItems();
+        armarCabecera();
+        
+        
     }
 
     /**
@@ -53,6 +57,11 @@ public class FormularioInscripciones extends javax.swing.JInternalFrame {
         jLabel2.setText("Seleccione un alumno:");
 
         jcListaAlumnos.setToolTipText("");
+        jcListaAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcListaAlumnosActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Listado de materias");
 
@@ -79,6 +88,11 @@ public class FormularioInscripciones extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(jtTablaMaterias);
+        if (jtTablaMaterias.getColumnModel().getColumnCount() > 0) {
+            jtTablaMaterias.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            jtTablaMaterias.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            jtTablaMaterias.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,6 +203,10 @@ public class FormularioInscripciones extends javax.swing.JInternalFrame {
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbAnularInscActionPerformed
+
+    private void jcListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListaAlumnosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcListaAlumnosActionPerformed
     public void agregarItems (){
         AlumnoData alumData = new AlumnoData();
         List<Alumno> listaAlumnos = alumData.listarAlumnos();
@@ -216,4 +234,12 @@ public class FormularioInscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrMatNoInsc;
     private javax.swing.JTable jtTablaMaterias;
     // End of variables declaration//GEN-END:variables
+
+
+private void armarCabecera(){
+    model.addColumn("ID");
+    model.addColumn("Nombre");
+    model.addColumn("Año");
+    jtTablaMaterias.setModel(model);
+}
 }
