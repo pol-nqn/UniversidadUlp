@@ -5,7 +5,9 @@
 package Vistas;
 
 import AccesoADatos.AlumnoData;
+import AccesoADatos.InscripcionData;
 import Entidades.Alumno;
+import Entidades.Materia;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -193,7 +195,14 @@ private DefaultTableModel model = new DefaultTableModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrMatInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatInscActionPerformed
-        // TODO add your handling code here:
+        InscripcionData insc=new InscripcionData();
+        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+        int idAlumnoSelec=alumnoSelec.getIdAlumno();
+        List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
+       
+        for (Materia aux : listaInscriptas){
+            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+        }
     }//GEN-LAST:event_jrMatInscActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
@@ -215,7 +224,7 @@ private DefaultTableModel model = new DefaultTableModel();
             String apellido = aux.getApellido();
             String nombre = aux.getNombre();
             String fechaNac = aux.getFechaNacimiento().toString();
-            jcListaAlumnos.addItem(dni+", "+apellido+", "+nombre+", "+fechaNac);
+            jcListaAlumnos.addItem(aux);
         }
     }
     
@@ -229,7 +238,7 @@ private DefaultTableModel model = new DefaultTableModel();
     private javax.swing.JButton jbAnularInsc;
     private javax.swing.JButton jbInscribir;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcListaAlumnos;
+    private javax.swing.JComboBox<Alumno> jcListaAlumnos;
     private javax.swing.JRadioButton jrMatInsc;
     private javax.swing.JRadioButton jrMatNoInsc;
     private javax.swing.JTable jtTablaMaterias;
@@ -242,4 +251,5 @@ private void armarCabecera(){
     model.addColumn("Año");
     jtTablaMaterias.setModel(model);
 }
+
 }
