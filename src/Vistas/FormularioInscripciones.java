@@ -75,6 +75,11 @@ private DefaultTableModel model = new DefaultTableModel();
         });
 
         jrMatNoInsc.setText("Materias no inscriptas");
+        jrMatNoInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrMatNoInscActionPerformed(evt);
+            }
+        });
 
         jtTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,6 +221,17 @@ private DefaultTableModel model = new DefaultTableModel();
     private void jcListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListaAlumnosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcListaAlumnosActionPerformed
+
+    private void jrMatNoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatNoInscActionPerformed
+        InscripcionData insc = new InscripcionData();
+        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+        int idAlumnoSelec=alumnoSelec.getIdAlumno();
+        List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
+       
+        for (Materia aux : listaInscriptas){
+            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+        }
+    }//GEN-LAST:event_jrMatNoInscActionPerformed
     public void agregarItems (){
         AlumnoData alumData = new AlumnoData();
         List<Alumno> listaAlumnos = alumData.listarAlumnos();

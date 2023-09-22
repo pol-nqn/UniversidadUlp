@@ -73,6 +73,22 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
                 jtfNombreActionPerformed(evt);
             }
         });
+        jtfNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jtfNombrePropertyChange(evt);
+            }
+        });
+        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyTyped(evt);
+            }
+        });
 
         jtfAnio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -209,12 +225,18 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         MateriaData matData = new MateriaData();
         try{
         Materia materia = matData.buscarMateria(Integer.parseInt(jtfCod.getText()));
-//        if (materia.isEstado()==true){
-        
-        jtfNombre.setText(materia.getNombre());
-        jtfAnio.setText(Integer.toString(materia.getAnioMateria()));
-        jrEstado.setSelected(materia.isEstado());
-        jrEstado.setEnabled(true);
+        if (!materia.getNombre().isEmpty()){
+            jtfNombre.setText(materia.getNombre());
+            jtfAnio.setText(Integer.toString(materia.getAnioMateria()));
+            jrEstado.setSelected(materia.isEstado());
+            jrEstado.setEnabled(true);
+        } else {
+            jtfCod.setText("");
+            jtfNombre.setText("");
+            jtfAnio.setText("");
+            jrEstado.setSelected(false);
+            
+        }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Debe introducir un código a buscar");
         }
@@ -278,21 +300,25 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtfCodMouseClicked
 
     private void jtfNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNombreMouseClicked
-        jbNuevo.setEnabled(true);  
+        
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
         jrEstado.setEnabled(true);
     }//GEN-LAST:event_jtfNombreMouseClicked
 
     private void jtfAnioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfAnioMouseClicked
-        jbNuevo.setEnabled(true);   
+        if (jtfCod.getText().equals("")) {
+            jbNuevo.setEnabled(true);  
+        }   
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
         jrEstado.setEnabled(true);
     }//GEN-LAST:event_jtfAnioMouseClicked
 
     private void jrEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrEstadoActionPerformed
-        jbNuevo.setEnabled(false);   
+        if (jtfCod.getText().equals("")) {
+            jbNuevo.setEnabled(true);  
+        }   
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
         jrEstado.setEnabled(true);
@@ -306,6 +332,29 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jtfAnio.setEnabled(true);
     }//GEN-LAST:event_jbBuscarMouseClicked
 
+    private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyTyped
+
+    }//GEN-LAST:event_jtfNombreKeyTyped
+
+    private void jtfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyPressed
+
+    }//GEN-LAST:event_jtfNombreKeyPressed
+
+    private void jtfNombrePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jtfNombrePropertyChange
+   
+    }//GEN-LAST:event_jtfNombrePropertyChange
+
+    private void jtfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyReleased
+        if (jtfCod.getText().equals("") && !jtfNombre.getText().equals("")) {
+          jbNuevo.setEnabled(true);  
+        }
+        if (jtfNombre.getText().equals("")) {
+           jbNuevo.setEnabled(false);
+        }
+    }//GEN-LAST:event_jtfNombreKeyReleased
+    
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBSalir;
