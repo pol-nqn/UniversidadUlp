@@ -10,6 +10,7 @@ import Entidades.Alumno;
 import Entidades.Materia;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -69,6 +70,11 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtTablaNotas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jtTablaNotasPropertyChange(evt);
+            }
+        });
         jtTablaNotas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtTablaNotasKeyReleased(evt);
@@ -164,25 +170,36 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         int fila = jtTablaNotas.getSelectedRow();
         int colum = jtTablaNotas.getSelectedColumn();
         
+        int nuevaNota = (int)jtTablaNotas.getValueAt(fila, colum);
         int idMat = (int)jtTablaNotas.getValueAt(fila, 0);
+        JOptionPane.showMessageDialog(null,nuevaNota);
+        JOptionPane.showMessageDialog(null,idMat);
+        
         Alumno alum = new Alumno();
         alum =(Alumno) jcAlumnos.getSelectedItem();
-                
-        double nuevaNota = (int)jtTablaNotas.getValueAt(fila, colum);
         
-        insc.actualizarNota(alum.getIdAlumno(), idMat, nuevaNota);
+        insc.actualizarNota( nuevaNota,alum.getIdAlumno(), idMat);
+        
+        vaciarTabla();
+        mostrarNota();
         
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jtTablaNotasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaNotasKeyReleased
-        if (jtTablaNotas.isEditing()){ 
-            jbGuardar.setEnabled(true);
-        }
+        
     }//GEN-LAST:event_jtTablaNotasKeyReleased
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jtTablaNotasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jtTablaNotasPropertyChange
+        int fila = jtTablaNotas.getSelectedRow();
+        int colum = jtTablaNotas.getSelectedColumn();
+        
+        int valor = (int)jtTablaNotas.getValueAt(fila, colum);
+        JOptionPane.showMessageDialog(null,valor);
+    }//GEN-LAST:event_jtTablaNotasPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
