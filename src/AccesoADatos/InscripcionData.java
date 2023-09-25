@@ -28,8 +28,8 @@ public class InscripcionData {
         List<Materia> materias = new ArrayList<Materia>();
         
         try {
-            String sql = "SELECT inscripcion.idMateria, nombre, anio FROM inscripcion,materia "
-                + "WHERE inscripcion.idMateria = materia.idMateria AND inscripcion.idAlumno = ? ;";
+            String sql = "SELECT materia.* FROM materia JOIN inscripcion \n" +
+                "ON ( materia.idMateria = inscripcion.idMateria AND inscripcion.idAlumno = ?);";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -64,8 +64,9 @@ public class InscripcionData {
         List<Materia> materias = new ArrayList<Materia>();
         
         try {
-            String sql = "SELECT materia.idMateria, nombre, anio FROM inscripcion, materia"
-                + "WHERE NOT inscripcion.idMateria = materia.idMateria AND inscripcion.idAlumno = ? ";
+            String sql = "SELECT materia.* FROM materia, inscripcion \n" +
+                        "WHERE (materia.idMateria = inscripcion.idMateria AND inscripcion.idAlumno != ?)\n" +
+                        "OR materia.idMateria != inscripcion.idMateria";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);

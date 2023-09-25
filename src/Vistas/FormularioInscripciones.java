@@ -8,7 +8,6 @@ import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
 import Entidades.Alumno;
 import Entidades.Materia;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -68,6 +67,11 @@ private DefaultTableModel model = new DefaultTableModel();
         jLabel3.setText("Listado de materias");
 
         jrMatInsc.setText("Materias inscriptas");
+        jrMatInsc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jrMatInscItemStateChanged(evt);
+            }
+        });
         jrMatInsc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrMatInscActionPerformed(evt);
@@ -75,6 +79,16 @@ private DefaultTableModel model = new DefaultTableModel();
         });
 
         jrMatNoInsc.setText("Materias no inscriptas");
+        jrMatNoInsc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jrMatNoInscItemStateChanged(evt);
+            }
+        });
+        jrMatNoInsc.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrMatNoInscStateChanged(evt);
+            }
+        });
         jrMatNoInsc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrMatNoInscActionPerformed(evt);
@@ -200,14 +214,21 @@ private DefaultTableModel model = new DefaultTableModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrMatInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatInscActionPerformed
-        InscripcionData insc=new InscripcionData();
-        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-        int idAlumnoSelec=alumnoSelec.getIdAlumno();
-        List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
-       
-        for (Materia aux : listaInscriptas){
-            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-        }
+        /*vaciarTabla();
+        if (jrMatInsc.isSelected() == true) {
+            jrMatNoInsc.setSelected(false);
+            
+            InscripcionData insc=new InscripcionData();
+            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+            int idAlumnoSelec=alumnoSelec.getIdAlumno();
+            List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
+
+            for (Materia aux : listaInscriptas){
+                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+            }
+        } else {
+            jrMatNoInsc.setSelected(true);
+        }*/
     }//GEN-LAST:event_jrMatInscActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
@@ -223,15 +244,67 @@ private DefaultTableModel model = new DefaultTableModel();
     }//GEN-LAST:event_jcListaAlumnosActionPerformed
 
     private void jrMatNoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatNoInscActionPerformed
-        InscripcionData insc = new InscripcionData();
-        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-        int idAlumnoSelec=alumnoSelec.getIdAlumno();
-        List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
-       
-        for (Materia aux : listaInscriptas){
-            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-        }
+        /*vaciarTabla();
+        if (jrMatNoInsc.isSelected() == true) {
+            jrMatInsc.setSelected(false);
+            
+            InscripcionData insc = new InscripcionData();
+            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+            int idAlumnoSelec = alumnoSelec.getIdAlumno();
+            List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
+
+            for (Materia aux : listaInscriptas){
+                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+            }
+        } else {
+            jrMatInsc.setSelected(true);
+        }*/
     }//GEN-LAST:event_jrMatNoInscActionPerformed
+
+    private void jrMatNoInscStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrMatNoInscStateChanged
+        
+        
+    }//GEN-LAST:event_jrMatNoInscStateChanged
+
+    private void jrMatNoInscItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jrMatNoInscItemStateChanged
+        vaciarTabla();
+        if (jrMatNoInsc.isSelected() == true) {
+            jrMatInsc.setSelected(false);
+            
+            InscripcionData insc = new InscripcionData();
+            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+            int idAlumnoSelec = alumnoSelec.getIdAlumno();
+            List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
+
+            for (Materia aux : listaInscriptas){
+                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+            }
+        } else {
+            jrMatInsc.setSelected(true);
+        }
+    }//GEN-LAST:event_jrMatNoInscItemStateChanged
+
+    private void jrMatInscItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jrMatInscItemStateChanged
+        vaciarTabla();
+        if (jrMatInsc.isSelected() == true) {
+            jrMatNoInsc.setSelected(false);
+            
+            InscripcionData insc=new InscripcionData();
+            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+            int idAlumnoSelec=alumnoSelec.getIdAlumno();
+            List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
+
+            for (Materia aux : listaInscriptas){
+                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+            }
+        } else {
+            jrMatNoInsc.setSelected(true);
+        }
+    }//GEN-LAST:event_jrMatInscItemStateChanged
+   
+    
+    
+    
     public void agregarItems (){
         AlumnoData alumData = new AlumnoData();
         List<Alumno> listaAlumnos = alumData.listarAlumnos();
@@ -266,6 +339,12 @@ private void armarCabecera(){
     model.addColumn("Nombre");
     model.addColumn("Año");
     jtTablaMaterias.setModel(model);
+}
+private void vaciarTabla () {
+    for (int i = 0; i < model.getRowCount();i++){
+        model.removeRow(i);
+    }
+    
 }
 
 }
