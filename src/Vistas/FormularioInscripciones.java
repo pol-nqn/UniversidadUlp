@@ -28,6 +28,7 @@ private DefaultTableModel model = new DefaultTableModel();
         armarCabecera();
         vaciarTabla();
         cargarNoInscriptas ();
+        jtTablaMaterias.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -320,10 +321,6 @@ private DefaultTableModel model = new DefaultTableModel();
         AlumnoData alumData = new AlumnoData();
         List<Alumno> listaAlumnos = alumData.listarAlumnos();
         for (Alumno aux :listaAlumnos){
-            String dni = Integer.toString(aux.getDni());
-            String apellido = aux.getApellido();
-            String nombre = aux.getNombre();
-            String fechaNac = aux.getFechaNacimiento().toString();
             jcListaAlumnos.addItem(aux);
         }
     }
@@ -350,6 +347,7 @@ private void armarCabecera(){
     model.addColumn("Nombre");
     model.addColumn("Año");
     jtTablaMaterias.setModel(model);
+    
 }
 private void vaciarTabla () {
     for (int i = model.getRowCount()-1; i >=0;i--){

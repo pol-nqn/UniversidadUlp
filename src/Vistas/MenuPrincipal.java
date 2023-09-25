@@ -171,7 +171,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiFormAlumnoActionPerformed
 
     private void jmiManejoNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiManejoNotasActionPerformed
-        // TODO add your handling code here:
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        FormularioNotas formNotas =new FormularioNotas();
+        formNotas.setVisible(true);
+        Escritorio.add(formNotas);
+        Escritorio.moveToFront(formNotas);
     }//GEN-LAST:event_jmiManejoNotasActionPerformed
 
     private void jmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSalirActionPerformed

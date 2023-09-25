@@ -51,13 +51,30 @@ public class InscripcionData {
         return materias;
     }
     /*Agregar metodos propios*/
-    public List<Inscripcion> obtenerInscripcionPorAlumno(int id){
-       List<Inscripcion> inscripciones = new ArrayList<Inscripcion>(); 
+    /***Metodo extra innecesario, tal vez lo use pero lo hice sin darme cuenta****/
+    public int obtenerIdInscripcion(int idAlumno, int idMateria){
+      /* List<Inscripcion> inscripciones = new ArrayList<Inscripcion>(); */
+       int idInsc = 0;
+       String sql = "SELECT idInscripcion FROM inscripcion "
+               + "WHERE idAlumno = ?  AND idMateria = ?"; 
        
-       String sql = "SELECT idInscripcion,idMateria FROM inscripcion "
-               + "WHERE inscripcion.idAlumno = ? "; 
+       PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                idInsc = rs.getInt("idInscripcion"); 
+            }
+            ps.close();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al ejecutar consulta sql para obtener inscripcion"+ ex.getMessage());
+        }
+            
        
-       return inscripciones;
+       return idInsc;
     }
     
     public List<Materia> obtenerMateriasNoCursadas(int id){
@@ -72,6 +89,7 @@ public class InscripcionData {
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            
             
             ResultSet rs = ps.executeQuery();
             Materia materia;
@@ -151,7 +169,7 @@ public class InscripcionData {
             if (update == 1){
                 JOptionPane.showMessageDialog(null, "Se actualizó la nota correctamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "No se puso actualizar la nota.");
+                JOptionPane.showMessageDialog(null, "No se pudo actualizar la nota.");
             }
                 
             ps.close();    
@@ -186,5 +204,28 @@ public class InscripcionData {
             JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta sql.");
         }
         return alumnos;
+    }
+    
+    public int obtenerNotaPorAlumno (int idAlumno, int idMateria) {
+        int nota = 0;
+        String sql = "SELECT nota FROM inscripcion i WHERE idAlumno = ? AND idMateria = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                 nota = rs.getInt("nota");
+            }
+            
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta sql para las notas.");
+        }
+        return nota;
+            
     }
 }
