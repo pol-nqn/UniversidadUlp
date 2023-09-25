@@ -65,7 +65,7 @@ public class InscripcionData {
         
         try {
             String sql = "SELECT materia.* FROM materia, inscripcion \n" +
-                        "WHERE (materia.idMateria = inscripcion.idMateria AND inscripcion.idAlumno != ?)\n" +
+                        "WHERE (materia.idMateria = inscripcion.idMateria AND materia.estado = 1 AND inscripcion.idAlumno != ?)\n" +
                         "OR materia.idMateria != inscripcion.idMateria";
             
             PreparedStatement ps = con.prepareStatement(sql);

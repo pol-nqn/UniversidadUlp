@@ -218,7 +218,24 @@ private DefaultTableModel model = new DefaultTableModel();
     }//GEN-LAST:event_jrMatInscActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-  
+        InscripcionData insc = new  InscripcionData();
+        Alumno alumSelec = new  Alumno();
+        Materia materiaSelec = new  Materia();
+        
+        
+        alumSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+        
+        Object[] fila = new Object[jtTablaMaterias.getColumnCount()];
+        for (int i = 0; i < jtTablaMaterias.getColumnCount();i++ ) {
+            fila[i] = jtTablaMaterias.getValueAt( jtTablaMaterias.getSelectedRow(), i);
+        }
+        materiaSelec.setIdMateria((int)fila[0]);
+        materiaSelec.setNombre(fila[1].toString());
+        materiaSelec.setAnioMateria((int)fila[2]);
+        materiaSelec.setEstado(true);
+                        
+        Inscripcion inscripcion = new Inscripcion(0,alumSelec,materiaSelec,0);
+        insc.guardarInscripcion(inscripcion);
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
@@ -226,13 +243,13 @@ private DefaultTableModel model = new DefaultTableModel();
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
     private void jcListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListaAlumnosActionPerformed
-      /*if (jrMatNoInsc.isSelected()== true){
+      if (jrMatNoInsc.isSelected()== true){
           vaciarTabla();
           cargarNoInscriptas();
       }else if (jrMatInsc.isSelected()== true){
           vaciarTabla();
           cargarInscriptas();
-      }*/
+      }
     }//GEN-LAST:event_jcListaAlumnosActionPerformed
 
     private void jrMatNoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatNoInscActionPerformed
