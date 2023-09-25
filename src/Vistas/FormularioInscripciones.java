@@ -7,6 +7,7 @@ package Vistas;
 import AccesoADatos.AlumnoData;
 import AccesoADatos.InscripcionData;
 import Entidades.Alumno;
+import Entidades.Inscripcion;
 import Entidades.Materia;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -24,8 +25,8 @@ private DefaultTableModel model = new DefaultTableModel();
         initComponents();
         agregarItems();
         armarCabecera();
-        
-        
+        vaciarTabla();
+        cargarNoInscriptas ();
     }
 
     /**
@@ -78,6 +79,7 @@ private DefaultTableModel model = new DefaultTableModel();
             }
         });
 
+        jrMatNoInsc.setSelected(true);
         jrMatNoInsc.setText("Materias no inscriptas");
         jrMatNoInsc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -109,19 +111,14 @@ private DefaultTableModel model = new DefaultTableModel();
             }
         ));
         jScrollPane1.setViewportView(jtTablaMaterias);
-        if (jtTablaMaterias.getColumnModel().getColumnCount() > 0) {
-            jtTablaMaterias.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            jtTablaMaterias.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            jtTablaMaterias.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
@@ -139,6 +136,7 @@ private DefaultTableModel model = new DefaultTableModel();
         });
 
         jbAnularInsc.setText("Anular inscripcion");
+        jbAnularInsc.setEnabled(false);
         jbAnularInsc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAnularInscActionPerformed(evt);
@@ -152,10 +150,6 @@ private DefaultTableModel model = new DefaultTableModel();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(jbInscribir)
                 .addGap(18, 18, 18)
@@ -164,25 +158,31 @@ private DefaultTableModel model = new DefaultTableModel();
                 .addComponent(jbSalir)
                 .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(30, 30, 30)
-                                .addComponent(jcListaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jrMatInsc)
-                                .addGap(44, 44, 44)
-                                .addComponent(jrMatNoInsc))))
+                        .addComponent(jLabel2)
+                        .addGap(30, 30, 30)
+                        .addComponent(jcListaAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabel3)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(jrMatInsc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jrMatNoInsc)
+                .addGap(73, 73, 73))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,25 +214,11 @@ private DefaultTableModel model = new DefaultTableModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrMatInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatInscActionPerformed
-        /*vaciarTabla();
-        if (jrMatInsc.isSelected() == true) {
-            jrMatNoInsc.setSelected(false);
-            
-            InscripcionData insc=new InscripcionData();
-            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-            int idAlumnoSelec=alumnoSelec.getIdAlumno();
-            List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
 
-            for (Materia aux : listaInscriptas){
-                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-            }
-        } else {
-            jrMatNoInsc.setSelected(true);
-        }*/
     }//GEN-LAST:event_jrMatInscActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-        // TODO add your handling code here:
+  
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
@@ -240,25 +226,17 @@ private DefaultTableModel model = new DefaultTableModel();
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
     private void jcListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListaAlumnosActionPerformed
-        // TODO add your handling code here:
+      /*if (jrMatNoInsc.isSelected()== true){
+          vaciarTabla();
+          cargarNoInscriptas();
+      }else if (jrMatInsc.isSelected()== true){
+          vaciarTabla();
+          cargarInscriptas();
+      }*/
     }//GEN-LAST:event_jcListaAlumnosActionPerformed
 
     private void jrMatNoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatNoInscActionPerformed
-        /*vaciarTabla();
-        if (jrMatNoInsc.isSelected() == true) {
-            jrMatInsc.setSelected(false);
-            
-            InscripcionData insc = new InscripcionData();
-            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-            int idAlumnoSelec = alumnoSelec.getIdAlumno();
-            List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
 
-            for (Materia aux : listaInscriptas){
-                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-            }
-        } else {
-            jrMatInsc.setSelected(true);
-        }*/
     }//GEN-LAST:event_jrMatNoInscActionPerformed
 
     private void jrMatNoInscStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrMatNoInscStateChanged
@@ -271,16 +249,14 @@ private DefaultTableModel model = new DefaultTableModel();
         if (jrMatNoInsc.isSelected() == true) {
             jrMatInsc.setSelected(false);
             
-            InscripcionData insc = new InscripcionData();
-            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-            int idAlumnoSelec = alumnoSelec.getIdAlumno();
-            List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas(idAlumnoSelec);
-
-            for (Materia aux : listaInscriptas){
-                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-            }
+            jbInscribir.setEnabled(true);
+            jbAnularInsc.setEnabled(false);
+            cargarNoInscriptas();
         } else {
             jrMatInsc.setSelected(true);
+            
+            jbInscribir.setEnabled(false);
+            jbAnularInsc.setEnabled(true);
         }
     }//GEN-LAST:event_jrMatNoInscItemStateChanged
 
@@ -289,22 +265,17 @@ private DefaultTableModel model = new DefaultTableModel();
         if (jrMatInsc.isSelected() == true) {
             jrMatNoInsc.setSelected(false);
             
-            InscripcionData insc=new InscripcionData();
-            Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-            int idAlumnoSelec=alumnoSelec.getIdAlumno();
-            List <Materia> listaInscriptas = insc.obtenerMateriasCursadas(idAlumnoSelec);
-
-            for (Materia aux : listaInscriptas){
-                model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
-            }
+            jbInscribir.setEnabled(false);
+            jbAnularInsc.setEnabled(true);
+            cargarInscriptas();
         } else {
             jrMatNoInsc.setSelected(true);
+            
+            jbInscribir.setEnabled(true);
+            jbAnularInsc.setEnabled(false);
         }
     }//GEN-LAST:event_jrMatInscItemStateChanged
    
-    
-    
-    
     public void agregarItems (){
         AlumnoData alumData = new AlumnoData();
         List<Alumno> listaAlumnos = alumData.listarAlumnos();
@@ -341,10 +312,30 @@ private void armarCabecera(){
     jtTablaMaterias.setModel(model);
 }
 private void vaciarTabla () {
-    for (int i = 0; i < model.getRowCount();i++){
+    for (int i = model.getRowCount()-1; i >=0;i--){
         model.removeRow(i);
     }
-    
 }
 
+private void cargarInscriptas (){
+        InscripcionData insc = new InscripcionData();
+        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+
+        List <Materia> listaInscriptas = insc.obtenerMateriasCursadas( alumnoSelec.getIdAlumno());
+
+        for (Materia aux : listaInscriptas){
+            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+        }
+}
+
+private void cargarNoInscriptas (){
+        InscripcionData insc = new InscripcionData();
+        Alumno alumnoSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+
+        List <Materia> listaInscriptas = insc.obtenerMateriasNoCursadas( alumnoSelec.getIdAlumno());
+
+        for (Materia aux : listaInscriptas){
+            model.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),aux.getAnioMateria()});
+        }
+}
 }
