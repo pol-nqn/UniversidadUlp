@@ -10,6 +10,7 @@ import Entidades.Alumno;
 import Entidades.Inscripcion;
 import Entidades.Materia;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -218,38 +219,60 @@ private DefaultTableModel model = new DefaultTableModel();
     }//GEN-LAST:event_jrMatInscActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-        InscripcionData insc = new  InscripcionData();
-        Alumno alumSelec = new  Alumno();
-        Materia materiaSelec = new  Materia();
-        
-        
-        alumSelec = (Alumno)jcListaAlumnos.getSelectedItem();
-        
-        Object[] fila = new Object[jtTablaMaterias.getColumnCount()];
-        for (int i = 0; i < jtTablaMaterias.getColumnCount();i++ ) {
-            fila[i] = jtTablaMaterias.getValueAt( jtTablaMaterias.getSelectedRow(), i);
+        try{
+            
+            InscripcionData insc = new  InscripcionData(); //instanciamos los objetos que vamos a usar
+            Alumno alumSelec = new  Alumno(); //intanciamos un alumno y una materia para llenarlos con los sellecionados en la lista de alumnos y en la tabla de materias
+            Materia materiaSelec = new  Materia();//y posteriormente pasarlos por parametro a una inscripcion que vamos a instanciar
+
+
+            alumSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+
+            Object[] fila = new Object[jtTablaMaterias.getColumnCount()]; //todo este codigo es para obtener los contenidos de la fila sellecionada de la tabla 
+            for (int i = 0; i < jtTablaMaterias.getColumnCount();i++ ) { //y usarlos para setear los valores de los atributos de la materia instanciada antes
+                fila[i] = jtTablaMaterias.getValueAt( jtTablaMaterias.getSelectedRow(), i);
+            }
+            materiaSelec.setIdMateria((int)fila[0]);
+            materiaSelec.setNombre(fila[1].toString());
+            materiaSelec.setAnioMateria((int)fila[2]);
+            materiaSelec.setEstado(true);
+            
+            //una vez cargados los datos en el alumno instanciado y en la materia instanciada los pasamos a una inscripcion para crearla
+            Inscripcion inscripcion = new Inscripcion(0,alumSelec,materiaSelec,0);
+            insc.guardarInscripcion(inscripcion);//psamos la inscripcion como parametro al metodo que cargara los datos en la tabla
+            
+            vaciarTabla();
+            cargarNoInscriptas();
+            
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una materia.");
         }
-        materiaSelec.setIdMateria((int)fila[0]);
-        materiaSelec.setNombre(fila[1].toString());
-        materiaSelec.setAnioMateria((int)fila[2]);
-        materiaSelec.setEstado(true);
-                        
-        Inscripcion inscripcion = new Inscripcion(0,alumSelec,materiaSelec,0);
-        insc.guardarInscripcion(inscripcion);
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscActionPerformed
-        // TODO add your handling code here:
+        try{   
+            InscripcionData insc = new InscripcionData();
+            Alumno alumSelec = (Alumno)jcListaAlumnos.getSelectedItem();
+            int idAlum = alumSelec.getIdAlumno();
+            int idMat = (int)jtTablaMaterias.getValueAt( jtTablaMaterias.getSelectedRow(), 0);
+            insc.borrarInscripcion( idAlum,idMat);
+            
+            vaciarTabla();
+            cargarInscriptas();
+            
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una materia.");
+        }
     }//GEN-LAST:event_jbAnularInscActionPerformed
 
     private void jcListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListaAlumnosActionPerformed
-      if (jrMatNoInsc.isSelected()== true){
-          vaciarTabla();
-          cargarNoInscriptas();
-      }else if (jrMatInsc.isSelected()== true){
-          vaciarTabla();
-          cargarInscriptas();
-      }
+        if (jrMatNoInsc.isSelected()== true){
+            vaciarTabla();
+            cargarNoInscriptas();
+        }else if (jrMatInsc.isSelected()== true){
+            vaciarTabla();
+            cargarInscriptas();
+        }
     }//GEN-LAST:event_jcListaAlumnosActionPerformed
 
     private void jrMatNoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMatNoInscActionPerformed

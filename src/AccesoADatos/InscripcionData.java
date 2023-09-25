@@ -116,14 +116,15 @@ public class InscripcionData {
         }
         
     }
-    public void borrarInscripcion(Inscripcion ins){
+    public void borrarInscripcion(int idAlum, int idMat){
         
         /*Controlar ingreso de usuarios*/
         try {
-            String sql = "DELETE FROM inscripcion WHERE idInscripcion = ?";
+            String sql = "DELETE FROM inscripcion WHERE idAlumno = ? AND idMateria = ?";
                 
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, ins.getIdInscripcion());
+            ps.setInt(1, idAlum);
+            ps.setInt(2, idMat);
             
             int insert = ps.executeUpdate();
             
