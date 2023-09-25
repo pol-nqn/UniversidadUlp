@@ -268,7 +268,7 @@ private DefaultTableModel model = new DefaultTableModel();
             
             jbInscribir.setEnabled(true);
             jbAnularInsc.setEnabled(false);
-            cargarNoInscriptas();
+            /*cargarNoInscriptas();*/
         } else {
             jrMatInsc.setSelected(true);
             

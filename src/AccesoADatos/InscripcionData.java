@@ -83,6 +83,7 @@ public class InscripcionData {
                 materias.add(materia);
             }
             ps.close();
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"No existe el alumno " + ex.getMessage());
         }
