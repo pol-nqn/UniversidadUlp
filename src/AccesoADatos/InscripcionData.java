@@ -64,9 +64,11 @@ public class InscripcionData {
         List<Materia> materias = new ArrayList<Materia>();
         
         try {
-            String sql = "SELECT materia.* FROM materia, inscripcion \n" +
-                        "WHERE (materia.idMateria = inscripcion.idMateria AND materia.estado = 1 AND inscripcion.idAlumno != ?)\n" +
-                        "OR materia.idMateria != inscripcion.idMateria";
+            String sql = "SELECT materia.* FROM materia\n" +
+                            "WHERE idMateria NOT IN \n" +
+                                "(SELECT m.idMateria FROM materia m JOIN inscripcion i \n" +
+                                "ON (m.idMateria = i.idMateria AND i.idAlumno = ?))"
+                           +"AND estado = 1";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
