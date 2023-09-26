@@ -77,9 +77,62 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Activo: ");
 
+        jtfDni.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtfDniFocusGained(evt);
+            }
+        });
+        jtfDni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfDniMouseClicked(evt);
+            }
+        });
         jtfDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfDniActionPerformed(evt);
+            }
+        });
+
+        jtfApellido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtfApellidoFocusGained(evt);
+            }
+        });
+        jtfApellido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfApellidoMouseClicked(evt);
+            }
+        });
+        jtfApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfApellidoActionPerformed(evt);
+            }
+        });
+
+        jtfNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtfNombreFocusGained(evt);
+            }
+        });
+        jtfNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfNombreMouseClicked(evt);
+            }
+        });
+        jtfNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfNombreActionPerformed(evt);
+            }
+        });
+
+        jrInsc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jrInscMouseClicked(evt);
+            }
+        });
+        jrInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrInscActionPerformed(evt);
             }
         });
 
@@ -91,6 +144,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         });
 
         jbModificar.setText("Modificar");
+        jbModificar.setEnabled(false);
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbModificarActionPerformed(evt);
@@ -105,6 +159,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         });
 
         jbNuevo.setText("Nuevo");
+        jbNuevo.setEnabled(false);
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNuevoActionPerformed(evt);
@@ -112,6 +167,28 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         });
 
         fechNac.setDateFormatString("yyyy-MM-dd");
+        fechNac.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                fechNacAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        fechNac.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                fechNacFocusGained(evt);
+            }
+        });
+        fechNac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fechNacMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                fechNacMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,30 +292,26 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno ();
         
         try {
-            alum.setDni(Integer.parseInt(jtfDni.getText()));
-            alum.setApellido(jtfApellido.getText());
-            alum.setNombre(jtfNombre.getText());
+            if (comprobarCamposVacios ()){
+                JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
+            } else {
+                alum.setDni(Integer.parseInt(jtfDni.getText()));
+                alum.setApellido(jtfApellido.getText());
+                alum.setNombre(jtfNombre.getText());
             
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
-            SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
-            //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
-            String fecha = dateAString.format(fechNac.getDate());
-            
-            alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
-            alum.setEstado(true);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
+                SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
+                //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
+                String fecha = dateAString.format(fechNac.getDate());
 
-            alumData.guardarAlumno(alum);
+                alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
+                alum.setEstado(true);
 
-            jtfId.setText("");
-            jtfDni.setText("");
-            jtfApellido.setText("");
-            jtfNombre.setText("");
-            fechNac.setDate(null);
-            jrInsc.setSelected(false);
-            
-           
-            
+                alumData.guardarAlumno(alum);
+
+                vaciarCampos ();
+            }
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Error al parsear");
         }
@@ -249,23 +322,24 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno();
         
         try{
-        alum = alumn.buscarAlumnoPorDni(Integer.parseInt(jtfDni.getText()));   
-        jtfId.setText(Integer.toString(alum.getIdAlumno()));
-        jtfDni.setText(Integer.toString(alum.getDni()));
-        jtfApellido.setText(alum.getApellido());
-        jtfNombre.setText(alum.getNombre());
-        
-        LocalDate fecha = alum.getFechaNacimiento();
-        fechNac.setDate(Date.from(fecha. //Transforma el valor Instant a Date.
-                        atStartOfDay(ZoneId.systemDefault()) //Transforma LocalDate a LocalDateTime y el parametro ZoneId le indica que usa el parametro por defecto del sistema de zona horaria
-                        .toInstant())); //Transforma el valor de fecha que ahora es LocalDateTime a Instant
-        
-        jrInsc.setSelected(alum.isEstado());
-        /*if (jrInsc.isSelected()== false) {
-            jbEliminar.setEnabled(false);
-        } else {
-            jbEliminar.setEnabled(true);
-        }*/
+            if (jtfDni.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this,"Debe escribir un DNI para buscarlo");
+            } else {
+                alum = alumn.buscarAlumnoPorDni(Integer.parseInt(jtfDni.getText()));   
+                jtfId.setText(Integer.toString(alum.getIdAlumno()));
+                jtfDni.setText(Integer.toString(alum.getDni()));
+                jtfApellido.setText(alum.getApellido());
+                jtfNombre.setText(alum.getNombre());
+
+                LocalDate fecha = alum.getFechaNacimiento();
+                fechNac.setDate(Date.from(fecha. //Transforma el valor Instant a Date.
+                                atStartOfDay(ZoneId.systemDefault()) //Transforma LocalDate a LocalDateTime y el parametro ZoneId le indica que usa el parametro por defecto del sistema de zona horaria
+                                .toInstant())); //Transforma el valor de fecha que ahora es LocalDateTime a Instant
+
+                jrInsc.setSelected(alum.isEstado());
+
+                permitirModifONuevo ();
+            }    
         } catch (NullPointerException ex){
         }
         
@@ -273,11 +347,8 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         try {
-            if (jtfId.getText().equals("")|| jtfDni.getText().equals("")||
-                jtfApellido.getText().equals("")||
-                jtfNombre.getText().equals("")||
-                fechNac.getDate()== null){
-                JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
+            if (comprobarCamposVacios ()){
+                    JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
             } else {
                 /*if (Integer.parseInt(jtfApellido.getText()) > 0|| Integer.parseInt(jtfNombre.getText()) > 0){
                     JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
@@ -300,28 +371,84 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
                     alumData.modificarAlumno(alum);
 
-                    jtfId.setText("");
-                    jtfDni.setText("");
-                    jtfApellido.setText("");
-                    jtfNombre.setText("");
-                    fechNac.setDate(null);
-                    jrInsc.setSelected(false);
+                    vaciarCampos ();
                 /*}*/
-                
-                
             }
         } catch (NumberFormatException ex) {
              JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
-        } catch (NullPointerException ex) {
-            
-        }
-             
+            } catch (NullPointerException ex) {}
         
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jtfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfApellidoActionPerformed
+        
+    }//GEN-LAST:event_jtfApellidoActionPerformed
+
+    private void jtfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreActionPerformed
+    
+    }//GEN-LAST:event_jtfNombreActionPerformed
+
+    private void fechNacAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_fechNacAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechNacAncestorAdded
+
+    private void fechNacFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechNacFocusGained
+
+    }//GEN-LAST:event_fechNacFocusGained
+
+    private void jrInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrInscActionPerformed
+    
+    }//GEN-LAST:event_jrInscActionPerformed
+
+    private void jtfApellidoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfApellidoFocusGained
+   
+    }//GEN-LAST:event_jtfApellidoFocusGained
+
+    private void jtfNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfNombreFocusGained
+    
+    }//GEN-LAST:event_jtfNombreFocusGained
+
+    private void jtfDniFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfDniFocusGained
+        
+    }//GEN-LAST:event_jtfDniFocusGained
+
+    private void jtfDniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfDniMouseClicked
+        habilitarCamposIdDni ();
+        inhabilitarNombre ();
+        permitirModifONuevo ();
+    }//GEN-LAST:event_jtfDniMouseClicked
+
+    private void jtfApellidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfApellidoMouseClicked
+        habilitarNombre ();
+        inhabilitarCamposIdDni ();
+        permitirModifONuevo ();
+    }//GEN-LAST:event_jtfApellidoMouseClicked
+
+    private void jtfNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNombreMouseClicked
+        habilitarNombre ();
+        inhabilitarCamposIdDni ();
+        permitirModifONuevo ();
+    }//GEN-LAST:event_jtfNombreMouseClicked
+
+    private void fechNacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechNacMouseClicked
+        habilitarNombre ();
+        inhabilitarCamposIdDni ();
+        permitirModifONuevo ();
+    }//GEN-LAST:event_fechNacMouseClicked
+
+    private void jrInscMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrInscMouseClicked
+        habilitarNombre ();
+        inhabilitarCamposIdDni ();
+        permitirModifONuevo ();
+    }//GEN-LAST:event_jrInscMouseClicked
+
+    private void fechNacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechNacMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechNacMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -343,4 +470,56 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void inhabilitarCamposIdDni () {
+        jtfId.setEnabled(false);
+        jtfDni.setEnabled(false);
+        
+        jbBuscar.setEnabled(false);
+    }
+    private void inhabilitarNombre () {
+        jtfNombre.setEnabled(false);
+        jtfApellido.setEnabled(false);
+        fechNac.setEnabled(false);
+        jrInsc.setEnabled(false);
+    }
+    private void habilitarCamposIdDni () {
+        jtfId.setEnabled(true);
+        jtfDni.setEnabled(true);
+        
+        jbBuscar.setEnabled(true);
+    }
+    private void habilitarNombre () {
+        jtfNombre.setEnabled(true);
+        jtfApellido.setEnabled(true);
+        fechNac.setEnabled(true);
+        jrInsc.setEnabled(true);
+    }
+    private void permitirModifONuevo () {
+        if (jtfId.getText().isEmpty()){
+            jbModificar.setEnabled(false);
+            jbNuevo.setEnabled(true);
+        } else {
+            jbModificar.setEnabled(true);
+            jbNuevo.setEnabled(false);
+        }
+    }
+    private void vaciarCampos () {
+        jtfId.setText("");
+        jtfDni.setText("");
+        jtfApellido.setText("");
+        jtfNombre.setText("");
+        fechNac.setDate(null);
+        jrInsc.setSelected(false);
+    }
+    private boolean comprobarCamposVacios () {
+        if (jtfId.getText().equals("")|| jtfDni.getText().equals("")||
+                jtfApellido.getText().equals("")||
+                jtfNombre.getText().equals("")||
+                fechNac.getDate()== null){
+            return true;
+        } else{
+            return false;
+        }
+        }
 }
