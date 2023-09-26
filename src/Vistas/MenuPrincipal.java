@@ -56,7 +56,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Escritorio.setLayout(EscritorioLayout);
         EscritorioLayout.setHorizontalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 588, Short.MAX_VALUE)
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -66,6 +66,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmFormularioMaterias.setAlignmentX(5.0F);
 
         jMenu1.setText("Alumno");
+        jMenu1.setPreferredSize(new java.awt.Dimension(80, 21));
 
         jmiFormAlumno.setText("Formulario de alumo");
         jmiFormAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +79,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmFormularioMaterias.add(jMenu1);
 
         jMenu2.setText("Materia");
+        jMenu2.setPreferredSize(new java.awt.Dimension(80, 21));
         jMenu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu2ActionPerformed(evt);
@@ -95,6 +97,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmFormularioMaterias.add(jMenu2);
 
         jMenu3.setText("Administración");
+        jMenu3.setPreferredSize(new java.awt.Dimension(120, 21));
 
         jmiManejoInsc.setText("Manejo de inscripciones");
         jmiManejoInsc.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +118,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmFormularioMaterias.add(jMenu3);
 
         jMenu4.setText("Consultas");
+        jMenu4.setPreferredSize(new java.awt.Dimension(80, 21));
 
         jmiAlumPorMat.setText("Alumnos por materias");
         jmiAlumPorMat.addActionListener(new java.awt.event.ActionListener() {

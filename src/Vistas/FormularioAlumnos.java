@@ -295,22 +295,26 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             if (comprobarCamposVacios ()){
                 JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
             } else {
-                alum.setDni(Integer.parseInt(jtfDni.getText()));
-                alum.setApellido(jtfApellido.getText());
-                alum.setNombre(jtfNombre.getText());
-            
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
-                SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
-                //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
-                String fecha = dateAString.format(fechNac.getDate());
+                if (comprobarCadena(jtfNombre.getText()) || comprobarCadena(jtfApellido.getText())){
+                    JOptionPane.showMessageDialog(this,"Los campos de Nombre y Apellido no pueden contener números.");
+                } else {
+                    alum.setDni(Integer.parseInt(jtfDni.getText()));
+                    alum.setApellido(jtfApellido.getText());
+                    alum.setNombre(jtfNombre.getText());
 
-                alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
-                alum.setEstado(true);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
+                    SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
+                    //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
+                    String fecha = dateAString.format(fechNac.getDate());
 
-                alumData.guardarAlumno(alum);
+                    alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
+                    alum.setEstado(true);
 
-                vaciarCampos ();
+                    alumData.guardarAlumno(alum);
+
+                    vaciarCampos ();
+                }
             }
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Error al parsear");
@@ -350,9 +354,9 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             if (comprobarCamposVacios ()){
                     JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
             } else {
-                /*if (Integer.parseInt(jtfApellido.getText()) > 0|| Integer.parseInt(jtfNombre.getText()) > 0){
-                    JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
-                } else {*/
+                if (comprobarCadena(jtfNombre.getText()) || comprobarCadena(jtfApellido.getText())){
+                    JOptionPane.showMessageDialog(this,"Los campos de Nombre y Apellido no pueden contener números.");
+                } else {
                     AlumnoData alumData = new AlumnoData();
                     Alumno alum = new Alumno();
                     alum.setIdAlumno(Integer.parseInt(jtfId.getText()));
@@ -372,7 +376,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                     alumData.modificarAlumno(alum);
 
                     vaciarCampos ();
-                /*}*/
+                }
             }
         } catch (NumberFormatException ex) {
              JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
@@ -513,7 +517,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         jrInsc.setSelected(false);
     }
     private boolean comprobarCamposVacios () {
-        if (jtfId.getText().equals("")|| jtfDni.getText().equals("")||
+        if (jtfDni.getText().equals("")||
                 jtfApellido.getText().equals("")||
                 jtfNombre.getText().equals("")||
                 fechNac.getDate()== null){
@@ -522,4 +526,8 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             return false;
         }
         }
+    private boolean comprobarCadena ( String cadena){
+        
+         return cadena.matches(".*\\d.*");
+    }
 }
