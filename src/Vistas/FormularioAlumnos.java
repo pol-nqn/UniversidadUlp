@@ -51,7 +51,6 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
         jtfNombre = new javax.swing.JTextField();
         jrInsc = new javax.swing.JRadioButton();
         jbBuscar = new javax.swing.JButton();
-        jbEliminar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
@@ -76,7 +75,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Fecha de nacimiento:");
 
-        jLabel7.setText("Inscripto:");
+        jLabel7.setText("Activo: ");
 
         jtfDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,19 +83,10 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
             }
         });
 
-        jrInsc.setEnabled(false);
-
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbBuscarActionPerformed(evt);
-            }
-        });
-
-        jbEliminar.setText("Eliminar");
-        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEliminarActionPerformed(evt);
             }
         });
 
@@ -131,17 +121,20 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbNuevo)
-                        .addGap(37, 37, 37)
-                        .addComponent(jbEliminar)
-                        .addGap(37, 37, 37)
-                        .addComponent(jbModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbSalir))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(53, 53, 53)
-                        .addComponent(fechNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(fechNac, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jbNuevo))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbSalir))
+                            .addComponent(jrInsc)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -161,12 +154,8 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                                 .addGap(49, 49, 49)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(49, 49, 49)
-                                .addComponent(jrInsc)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(75, 75, 75))
             .addGroup(layout.createSequentialGroup()
                 .addGap(243, 243, 243)
@@ -203,12 +192,10 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jrInsc))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbEliminar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbSalir)
-                        .addComponent(jbNuevo)
-                        .addComponent(jbModificar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSalir)
+                    .addComponent(jbNuevo)
+                    .addComponent(jbModificar))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -274,50 +261,61 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                         .toInstant())); //Transforma el valor de fecha que ahora es LocalDateTime a Instant
         
         jrInsc.setSelected(alum.isEstado());
+        /*if (jrInsc.isSelected()== false) {
+            jbEliminar.setEnabled(false);
+        } else {
+            jbEliminar.setEnabled(true);
+        }*/
         } catch (NullPointerException ex){
         }
         
     }//GEN-LAST:event_jbBuscarActionPerformed
 
-    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        AlumnoData alumData = new AlumnoData();
-        alumData.eliminarAlumno(Integer.parseInt(jtfDni.getText()));
-        
-        jtfId.setText("");
-        jtfDni.setText("");
-        jtfApellido.setText("");
-        jtfNombre.setText("");
-        fechNac.setDate(null);
-        jrInsc.setSelected(false);
-        
-       
-    }//GEN-LAST:event_jbEliminarActionPerformed
-
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        AlumnoData alumData = new AlumnoData();
-        Alumno alum = new Alumno();
-        alum.setIdAlumno(Integer.parseInt(jtfId.getText()));
-        alum.setDni(Integer.parseInt(jtfDni.getText()));
-        alum.setApellido(jtfApellido.getText());
-        alum.setNombre(jtfNombre.getText());
+        try {
+            if (jtfId.getText().equals("")|| jtfDni.getText().equals("")||
+                jtfApellido.getText().equals("")||
+                jtfNombre.getText().equals("")||
+                fechNac.getDate()== null){
+                JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
+            } else {
+                if (Integer.parseInt(jtfApellido.getText()) > 0|| Integer.parseInt(jtfNombre.getText()) > 0){
+                    JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
+                } else {
+                    AlumnoData alumData = new AlumnoData();
+                    Alumno alum = new Alumno();
+                    alum.setIdAlumno(Integer.parseInt(jtfId.getText()));
+                    alum.setDni(Integer.parseInt(jtfDni.getText()));
+                    alum.setApellido(jtfApellido.getText());
+                    alum.setNombre(jtfNombre.getText());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
-        SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
-        //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
-        String fecha = dateAString.format(fechNac.getDate());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    //Usamos esta clase para crear un string con el formato de fecha que queremos a partir de un dato tipo Date
+                    SimpleDateFormat dateAString = new SimpleDateFormat("yyyy-MM-dd");
+                    //Con el metodo .format() transformamos el dato Date a un string con el formato especificado arriba
+                    String fecha = dateAString.format(fechNac.getDate());
 
-        alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
-        alum.setEstado(jrInsc.isSelected());
-        
-        alumData.modificarAlumno(alum);
-        
-        jtfId.setText("");
-        jtfDni.setText("");
-        jtfApellido.setText("");
-        jtfNombre.setText("");
-        fechNac.setDate(null);
-        jrInsc.setSelected(false);     
+                    alum.setFechaNacimiento(LocalDate.parse(fecha, formatter));
+                    alum.setEstado(jrInsc.isSelected());
+
+                    alumData.modificarAlumno(alum);
+
+                    jtfId.setText("");
+                    jtfDni.setText("");
+                    jtfApellido.setText("");
+                    jtfNombre.setText("");
+                    fechNac.setDate(null);
+                    jrInsc.setSelected(false);
+                }
+                
+                
+            }
+        } catch (NumberFormatException ex) {
+             JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
+        } catch (NullPointerException ex) {
+            
+        }
+             
         
     }//GEN-LAST:event_jbModificarActionPerformed
 
@@ -336,7 +334,6 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbBuscar;
-    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;

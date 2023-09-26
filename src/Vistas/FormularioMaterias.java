@@ -62,7 +62,13 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
                 jtfCodActionPerformed(evt);
             }
         });
+        jtfCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfCodKeyReleased(evt);
+            }
+        });
 
+        jtfNombre.setEnabled(false);
         jtfNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtfNombreMouseClicked(evt);
@@ -90,6 +96,7 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
             }
         });
 
+        jtfAnio.setEnabled(false);
         jtfAnio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtfAnioMouseClicked(evt);
@@ -100,7 +107,13 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
                 jtfAnioActionPerformed(evt);
             }
         });
+        jtfAnio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfAnioKeyReleased(evt);
+            }
+        });
 
+        jrEstado.setEnabled(false);
         jrEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrEstadoActionPerformed(evt);
@@ -238,11 +251,10 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
             
         }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Debe introducir un código a buscar");
+            JOptionPane.showMessageDialog(this, "Debe introducir un código numerico");
+        } catch (NullPointerException ex){
+            /*JOptionPane.showMessageDialog(null, "No existe la materia");*/
         }
-//        }else {
-//        JOptionPane.showMessageDialog(null, "No existe la materia");
-//        }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -295,33 +307,62 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jbNuevo.setEnabled(false);
         jbModif.setEnabled(false);
         jtfCod.setEnabled(true);
+           
+        jtfNombre.setEnabled(false);
+        jtfAnio.setEnabled(false);
         jrEstado.setEnabled(false);
+        
+        jbBuscar.setEnabled(true);
+        
+        jtfNombre.setText("");
+        jtfAnio.setText("");
+        jrEstado.setSelected(false);
+       
+        
         
     }//GEN-LAST:event_jtfCodMouseClicked
 
     private void jtfNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNombreMouseClicked
+        jtfNombre.setEnabled(true);
+        jtfAnio.setEnabled(true);
+        jrEstado.setEnabled(true);
         
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
-        jrEstado.setEnabled(true);
+        jbBuscar.setEnabled(false);
+        
+        jtfCod.setText("");
+        
     }//GEN-LAST:event_jtfNombreMouseClicked
 
     private void jtfAnioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfAnioMouseClicked
         if (jtfCod.getText().equals("")) {
             jbNuevo.setEnabled(true);  
         }   
+        jtfNombre.setEnabled(true);
+        jtfAnio.setEnabled(true);
+        jrEstado.setEnabled(true);
+        
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
-        jrEstado.setEnabled(true);
+        jbBuscar.setEnabled(false);
+        
+        jtfCod.setText("");
     }//GEN-LAST:event_jtfAnioMouseClicked
 
     private void jrEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrEstadoActionPerformed
         if (jtfCod.getText().equals("")) {
             jbNuevo.setEnabled(true);  
         }   
+        jtfNombre.setEnabled(true);
+        jtfAnio.setEnabled(true);
+        jrEstado.setEnabled(true);
+        
         jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
-        jrEstado.setEnabled(true);
+        jbBuscar.setEnabled(false);
+        
+        jtfCod.setText("");
     }//GEN-LAST:event_jrEstadoActionPerformed
 
     private void jbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbBuscarMouseClicked
@@ -351,7 +392,25 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         if (jtfNombre.getText().equals("")) {
            jbNuevo.setEnabled(false);
         }
+        jbBuscar.setEnabled(false);
+        
     }//GEN-LAST:event_jtfNombreKeyReleased
+
+    private void jtfAnioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfAnioKeyReleased
+        jbBuscar.setEnabled(false);
+    }//GEN-LAST:event_jtfAnioKeyReleased
+
+    private void jtfCodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodKeyReleased
+        jtfNombre.setEnabled(false);
+        jtfAnio.setEnabled(false);
+        jrEstado.setEnabled(false);
+        
+        jbBuscar.setEnabled(true);
+        
+        jtfNombre.setText("");
+        jtfAnio.setText("");
+        jrEstado.setSelected(false);
+    }//GEN-LAST:event_jtfCodKeyReleased
     
     
    

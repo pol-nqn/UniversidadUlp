@@ -157,11 +157,11 @@ public class InscripcionData {
         }
     }
     
-   public void actualizarNota( int nota, int idAlum, int idMat){
+   public void actualizarNota( double nota, int idAlum, int idMat){
         String sql = "UPDATE inscripcion SET nota = ? WHERE idAlumno = ? AND idMateria = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, nota);
+            ps.setDouble(1, nota);
             ps.setInt(2, idAlum);
             ps.setInt(3, idMat);
             
@@ -206,8 +206,8 @@ public class InscripcionData {
         return alumnos;
     }
     
-    public int obtenerNotaPorAlumno (int idAlumno, int idMateria) {
-        int nota = 0;
+    public double obtenerNotaPorAlumno (int idAlumno, int idMateria) {
+        double nota = 0;
         String sql = "SELECT nota FROM inscripcion i WHERE idAlumno = ? AND idMateria = ?";
         
         try {
@@ -217,10 +217,9 @@ public class InscripcionData {
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                 nota = rs.getInt("nota");
+                 nota = rs.getDouble("nota");
             }
-            
-            
+//            
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta sql para las notas.");

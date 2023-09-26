@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -37,6 +38,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         armarCabecera();
         vaciarTabla();
         mostrarNota();
+        jbGuardar.setEnabled(false);
     }
 
     /**
@@ -56,6 +58,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         jtTablaNotas = new javax.swing.JTable();
         jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("Carga de notas");
 
@@ -109,10 +112,10 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(147, 147, 147))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jbGuardar.setText("Guardar");
@@ -129,6 +132,9 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
                 jbSalirActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium", 2, 10)); // NOI18N
+        jLabel3.setText("(Precione \"enter\"  antes de guardar )");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,11 +156,15 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
                         .addGap(0, 62, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(93, 93, 93)
                 .addComponent(jbGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbSalir)
                 .addGap(32, 32, 32))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,13 +174,15 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(24, 24, 24)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbSalir)
                     .addComponent(jbGuardar))
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,28 +195,35 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcAlumnosActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+
         InscripcionData insc = new InscripcionData();
         int fila = jtTablaNotas.getSelectedRow();
-        /*int colum = jtTablaNotas.getSelectedColumn();*/
         
-        int nuevaNota = (int)jtTablaNotas.getValueAt(fila, 2);
-        int idMat = (int)jtTablaNotas.getValueAt(fila, 0);
-        JOptionPane.showMessageDialog(null,nuevaNota);
-        JOptionPane.showMessageDialog(null,idMat);
+        try {
+            Double nuevaNota = Double.parseDouble(jtTablaNotas.getValueAt(fila, 2).toString());
+            if (nuevaNota < 1 || nuevaNota > 10  ){
+                JOptionPane.showMessageDialog(this, "La nota debe estar 1 y 10");
+            } else {
+                
+                int idMat = (int)jtTablaNotas.getValueAt(fila, 0);
+                Alumno alum = new Alumno();
+                alum =(Alumno) jcAlumnos.getSelectedItem();
+
+                insc.actualizarNota( nuevaNota,alum.getIdAlumno(), idMat);
+            }
+        } catch (NumberFormatException ex ) {
+            JOptionPane.showMessageDialog(this, "La nota debe ser un valor numerico.");
+        }
         
-        Alumno alum = new Alumno();
-        alum =(Alumno) jcAlumnos.getSelectedItem();
-        
-        insc.actualizarNota( nuevaNota,alum.getIdAlumno(), idMat);
         
         vaciarTabla();
         mostrarNota();
+        jbGuardar.setEnabled(false);
         
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jtTablaNotasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaNotasKeyReleased
         jbGuardar.setEnabled(true);
-        
     }//GEN-LAST:event_jtTablaNotasKeyReleased
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -220,17 +239,14 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtTablaNotasKeyTyped
 
     private void jtTablaNotasVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_jtTablaNotasVetoableChange
-        int fila = jtTablaNotas.getSelectedRow();
-        int colum = jtTablaNotas.getSelectedColumn();
-        
-        int valor = (int)jtTablaNotas.getValueAt(fila, colum);
-        JOptionPane.showMessageDialog(null,valor);
+    
     }//GEN-LAST:event_jtTablaNotasVetoableChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbGuardar;
@@ -265,7 +281,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         
         List <Materia> listaInscriptas = insc.obtenerMateriasCursadas( alumnoSelec.getIdAlumno());
         for (Materia aux : listaInscriptas){
-            int nota = insc.obtenerNotaPorAlumno(alumnoSelec.getIdAlumno(),aux.getIdMateria());
+            Double nota = insc.obtenerNotaPorAlumno(alumnoSelec.getIdAlumno(),aux.getIdMateria());
             modelo.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),nota});
         }
     }
