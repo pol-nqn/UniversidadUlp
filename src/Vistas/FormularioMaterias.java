@@ -114,6 +114,11 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         });
 
         jrEstado.setEnabled(false);
+        jrEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jrEstadoMouseClicked(evt);
+            }
+        });
         jrEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrEstadoActionPerformed(evt);
@@ -258,19 +263,32 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        MateriaData matData = new MateriaData();
-        Materia materia = new Materia();
-        
-        materia.setNombre(jtfNombre.getText());
-        materia.setAnioMateria(Integer.parseInt(jtfAnio.getText()));
-        materia.setEstado(true);
-        
-        matData.guardarMateria(materia);
-        
-        jtfCod.setText("");
-        jtfNombre.setText("");
-        jtfAnio.setText("");
-        jrEstado.setSelected(false);
+        try{
+            if (jtfNombre.getText().isEmpty() || jtfAnio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos.");
+            } else {
+                if (jtfNombre.getText().length()<=2) {
+                    JOptionPane.showMessageDialog(this, "Nombre demasiado corto.");
+                } else {
+                    MateriaData matData = new MateriaData();
+                    Materia materia = new Materia();
+
+                    materia.setNombre(jtfNombre.getText());
+                    materia.setAnioMateria(Integer.parseInt(jtfAnio.getText()));
+                    materia.setEstado(jrEstado.isSelected());
+
+                    matData.guardarMateria(materia);
+
+                    jtfCod.setText("");
+                    jtfNombre.setText("");
+                    jtfAnio.setText("");
+                    jrEstado.setSelected(false);
+                }
+                
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El año debe ser un número.");
+        }
         
         
     }//GEN-LAST:event_jbNuevoActionPerformed
@@ -307,16 +325,17 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jbNuevo.setEnabled(false);
         jbModif.setEnabled(false);
         jtfCod.setEnabled(true);
+        jbBuscar.setEnabled(true);
            
         jtfNombre.setEnabled(false);
         jtfAnio.setEnabled(false);
         jrEstado.setEnabled(false);
         
-        jbBuscar.setEnabled(true);
         
-        jtfNombre.setText("");
+        
+        /*jtfNombre.setText("");
         jtfAnio.setText("");
-        jrEstado.setSelected(false);
+        jrEstado.setSelected(false);*/
        
         
         
@@ -327,11 +346,9 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jtfAnio.setEnabled(true);
         jrEstado.setEnabled(true);
         
-        jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
         jbBuscar.setEnabled(false);
         
-        jtfCod.setText("");
         
     }//GEN-LAST:event_jtfNombreMouseClicked
 
@@ -343,26 +360,14 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jtfAnio.setEnabled(true);
         jrEstado.setEnabled(true);
         
-        jbModif.setEnabled(true);
         jtfCod.setEnabled(false);
         jbBuscar.setEnabled(false);
         
-        jtfCod.setText("");
+        permitirModificar();
     }//GEN-LAST:event_jtfAnioMouseClicked
 
     private void jrEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrEstadoActionPerformed
-        if (jtfCod.getText().equals("")) {
-            jbNuevo.setEnabled(true);  
-        }   
-        jtfNombre.setEnabled(true);
-        jtfAnio.setEnabled(true);
-        jrEstado.setEnabled(true);
-        
-        jbModif.setEnabled(true);
-        jtfCod.setEnabled(false);
-        jbBuscar.setEnabled(false);
-        
-        jtfCod.setText("");
+       
     }//GEN-LAST:event_jrEstadoActionPerformed
 
     private void jbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbBuscarMouseClicked
@@ -371,6 +376,7 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jtfCod.setEnabled(false);
         jrEstado.setEnabled(true);
         jtfAnio.setEnabled(true);
+        jtfNombre.setEnabled(true);
     }//GEN-LAST:event_jbBuscarMouseClicked
 
     private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyTyped
@@ -393,11 +399,12 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
            jbNuevo.setEnabled(false);
         }
         jbBuscar.setEnabled(false);
-        
+        permitirModificar();
     }//GEN-LAST:event_jtfNombreKeyReleased
 
     private void jtfAnioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfAnioKeyReleased
         jbBuscar.setEnabled(false);
+        permitirModificar();
     }//GEN-LAST:event_jtfAnioKeyReleased
 
     private void jtfCodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodKeyReleased
@@ -411,6 +418,20 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
         jtfAnio.setText("");
         jrEstado.setSelected(false);
     }//GEN-LAST:event_jtfCodKeyReleased
+
+    private void jrEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrEstadoMouseClicked
+         if (jtfCod.getText().equals("")) {
+            jbNuevo.setEnabled(true);  
+        }   
+        jtfNombre.setEnabled(true);
+        jtfAnio.setEnabled(true);
+        jrEstado.setEnabled(true);
+        
+        jtfCod.setEnabled(false);
+        jbBuscar.setEnabled(false);
+        
+        permitirModificar();
+    }//GEN-LAST:event_jrEstadoMouseClicked
     
     
    
@@ -430,4 +451,14 @@ public class FormularioMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfCod;
     private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
+    private void permitirModificar() {
+        if (jtfCod.getText().isEmpty()){
+            jbModif.setEnabled(false);
+            jbNuevo.setEnabled(true);
+        } else {
+            jbModif.setEnabled(true);
+            jbNuevo.setEnabled(false);
+        }
+                
+    }
 }
