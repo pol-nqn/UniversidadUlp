@@ -117,6 +117,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu4.setText("Consultas");
 
         jmiAlumPorMat.setText("Alumnos por materias");
+        jmiAlumPorMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAlumPorMatActionPerformed(evt);
+            }
+        });
         jMenu4.add(jmiAlumPorMat);
 
         jmFormularioMaterias.add(jMenu4);
@@ -209,6 +214,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Escritorio.moveToFront(formInsc);
         
     }//GEN-LAST:event_jmiManejoInscActionPerformed
+
+    private void jmiAlumPorMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAlumPorMatActionPerformed
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        AlumnosPorMateria alumPorMat =new AlumnosPorMateria();
+        alumPorMat.setVisible(true);
+        Escritorio.add(alumPorMat);
+        Escritorio.moveToFront(alumPorMat);
+    }//GEN-LAST:event_jmiAlumPorMatActionPerformed
 
     /**
      * @param args the command line arguments

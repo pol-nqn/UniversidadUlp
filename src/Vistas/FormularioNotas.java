@@ -18,7 +18,15 @@ import javax.swing.table.DefaultTableModel;
  * @author nstut
  */
 public class FormularioNotas extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo = new DefaultTableModel(){
+        public boolean isCellEditable(int fila, int column) {
+            if (column == 2) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+    };
 
     /**
      * Creates new form FormularioNotas
@@ -78,6 +86,14 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         jtTablaNotas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtTablaNotasKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtTablaNotasKeyTyped(evt);
+            }
+        });
+        jtTablaNotas.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                jtTablaNotasVetoableChange(evt);
             }
         });
         jScrollPane1.setViewportView(jtTablaNotas);
@@ -178,7 +194,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno();
         alum =(Alumno) jcAlumnos.getSelectedItem();
         
-        insc.actualizarNota( nuevaNota,alum.getIdAlumno(), idMat);
+        insc.actualizarNota( nuevaNota,(int)alum.getIdAlumno(), idMat);
         
         vaciarTabla();
         mostrarNota();
@@ -194,12 +210,20 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jtTablaNotasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jtTablaNotasPropertyChange
+
+    }//GEN-LAST:event_jtTablaNotasPropertyChange
+
+    private void jtTablaNotasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaNotasKeyTyped
+        
+    }//GEN-LAST:event_jtTablaNotasKeyTyped
+
+    private void jtTablaNotasVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_jtTablaNotasVetoableChange
         int fila = jtTablaNotas.getSelectedRow();
         int colum = jtTablaNotas.getSelectedColumn();
         
         int valor = (int)jtTablaNotas.getValueAt(fila, colum);
         JOptionPane.showMessageDialog(null,valor);
-    }//GEN-LAST:event_jtTablaNotasPropertyChange
+    }//GEN-LAST:event_jtTablaNotasVetoableChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -238,14 +262,6 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         Alumno alumnoSelec = (Alumno)jcAlumnos.getSelectedItem();
         
         List <Materia> listaInscriptas = insc.obtenerMateriasCursadas( alumnoSelec.getIdAlumno());
-        /*int[] notas = new int[listaInscriptas.size()-1];*/
-        
-        /*int i=0;*/
-        /*for (Materia aux : listaInscriptas) {
-            int idMat = aux.getIdMateria();
-            notas[i]= insc.obtenerNotaPorAlumno(alumnoSelec.getIdAlumno(),idMat);
-            i++;
-        }*/
         for (Materia aux : listaInscriptas){
             int nota = insc.obtenerNotaPorAlumno(alumnoSelec.getIdAlumno(),aux.getIdMateria());
             modelo.addRow(new Object[]{aux.getIdMateria(),aux.getNombre(),nota});
