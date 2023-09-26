@@ -279,9 +279,9 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                 fechNac.getDate()== null){
                 JOptionPane.showMessageDialog(this,"Todos los campos deben estar completos");
             } else {
-                if (Integer.parseInt(jtfApellido.getText()) > 0|| Integer.parseInt(jtfNombre.getText()) > 0){
+                /*if (Integer.parseInt(jtfApellido.getText()) > 0|| Integer.parseInt(jtfNombre.getText()) > 0){
                     JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
-                } else {
+                } else {*/
                     AlumnoData alumData = new AlumnoData();
                     Alumno alum = new Alumno();
                     alum.setIdAlumno(Integer.parseInt(jtfId.getText()));
@@ -306,7 +306,7 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                     jtfNombre.setText("");
                     fechNac.setDate(null);
                     jrInsc.setSelected(false);
-                }
+                /*}*/
                 
                 
             }
