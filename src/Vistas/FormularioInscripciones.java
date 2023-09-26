@@ -146,6 +146,11 @@ private DefaultTableModel model = new DefaultTableModel();
         });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,6 +321,10 @@ private DefaultTableModel model = new DefaultTableModel();
             jbAnularInsc.setEnabled(false);
         }
     }//GEN-LAST:event_jrMatInscItemStateChanged
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
    
     public void agregarItems (){
         AlumnoData alumData = new AlumnoData();

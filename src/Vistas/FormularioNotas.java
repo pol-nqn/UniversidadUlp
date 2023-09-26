@@ -116,6 +116,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         );
 
         jbGuardar.setText("Guardar");
+        jbGuardar.setEnabled(false);
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbGuardarActionPerformed(evt);
@@ -184,9 +185,9 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         InscripcionData insc = new InscripcionData();
         int fila = jtTablaNotas.getSelectedRow();
-        int colum = jtTablaNotas.getSelectedColumn();
+        /*int colum = jtTablaNotas.getSelectedColumn();*/
         
-        int nuevaNota = (int)jtTablaNotas.getValueAt(fila, colum);
+        int nuevaNota = (int)jtTablaNotas.getValueAt(fila, 2);
         int idMat = (int)jtTablaNotas.getValueAt(fila, 0);
         JOptionPane.showMessageDialog(null,nuevaNota);
         JOptionPane.showMessageDialog(null,idMat);
@@ -194,7 +195,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
         Alumno alum = new Alumno();
         alum =(Alumno) jcAlumnos.getSelectedItem();
         
-        insc.actualizarNota( nuevaNota,(int)alum.getIdAlumno(), idMat);
+        insc.actualizarNota( nuevaNota,alum.getIdAlumno(), idMat);
         
         vaciarTabla();
         mostrarNota();
@@ -202,6 +203,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jtTablaNotasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaNotasKeyReleased
+        jbGuardar.setEnabled(true);
         
     }//GEN-LAST:event_jtTablaNotasKeyReleased
 
@@ -210,7 +212,7 @@ public class FormularioNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jtTablaNotasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jtTablaNotasPropertyChange
-
+        
     }//GEN-LAST:event_jtTablaNotasPropertyChange
 
     private void jtTablaNotasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTablaNotasKeyTyped

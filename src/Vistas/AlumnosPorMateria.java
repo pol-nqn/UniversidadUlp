@@ -17,7 +17,11 @@ import javax.swing.table.DefaultTableModel;
  * @author nstut
  */
 public class AlumnosPorMateria extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo= new DefaultTableModel();
+    private DefaultTableModel modelo= new DefaultTableModel(){
+        public boolean isCellEditable(int fila, int column) {
+                return false;
+        }
+    };
     /**
      * Creates new form AlumnosPorMateria
      */
@@ -137,7 +141,8 @@ public class AlumnosPorMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcMateriasActionPerformed
-       cargarMateriasTabla ();
+        vaciarTabla();
+        cargarMateriasTabla ();
     }//GEN-LAST:event_jcMateriasActionPerformed
 
 
