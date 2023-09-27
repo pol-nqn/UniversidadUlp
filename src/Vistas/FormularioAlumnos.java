@@ -345,7 +345,9 @@ public class FormularioAlumnos extends javax.swing.JInternalFrame {
                 permitirModifONuevo ();
             }    
         } catch (NullPointerException ex){
-        }
+        }catch (NumberFormatException ex) {
+             JOptionPane.showMessageDialog(this,"Complete los campos con el tipo de dato adecuado.");
+            }
         
     }//GEN-LAST:event_jbBuscarActionPerformed
 
